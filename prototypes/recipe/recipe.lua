@@ -1,7 +1,7 @@
 local modName = "__PoweredFloorExtended__"
-local selectedStyle = settings.startup["flooring-style"].value
 
 data:extend({
+-- Flooring
 {
   type = "recipe",
   name = "powered-floor-circuit-tile",
@@ -47,5 +47,65 @@ data:extend({
   result = "solar-powered-floor-tile",
   requester_paste_multiplier = 10,
   result_count = 10
+},
+
+{
+  type = "recipe",
+  name = "logistics-powered-floor-tile",
+  enabled = "false",
+  ingredients =
+  {
+    {"powered-floor-tile", 20},
+    {"roboport", 1}
+  },
+  energy_required = 0.5,
+  result = "logistics-powered-floor-tile",
+  requester_paste_multiplier = 5,
+  result_count = 20
+},
+-- Nodes
+{
+  type = "recipe",
+  name = "network-node",
+  enabled = "false",
+  ingredients =
+  {
+    {"logistics-powered-floor-tile", 4},
+    {"roboport", 1}
+  },
+  energy_required = 0.5,
+  result = "network-node",
+  requester_paste_multiplier = 5,
+  result_count = 4
+},
+
+{
+  type = "recipe",
+  name = "construct-node",
+  enabled = "false",
+  ingredients =
+  {
+    {"powered-floor-tile", 4},
+    {"roboport", 1}
+  },
+  energy_required = 0.5,
+  result = "construct-node",
+  requester_paste_multiplier = 5,
+  result_count = 4
+},
+
+{
+  type = "recipe",
+  name = "bot-node",
+  enabled = "false",
+  ingredients =
+  {
+    {"powered-floor-tile", 4},
+    {"roboport", 1}
+  },
+  energy_required = 0.5,
+  result = "bot-node",
+  requester_paste_multiplier = 5,
+  result_count = 4
 },
 })

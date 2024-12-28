@@ -1,5 +1,4 @@
 local modName = "__PoweredFloorExtended__"
-local selectedStyle = settings.startup["flooring-style"].value
 
 data:extend({
 {
@@ -16,7 +15,23 @@ data:extend({
 		{
 			type = "unlock-recipe",
 			recipe = "powered-floor-circuit-tile"
-		}
+		},
+		{
+			type = "unlock-recipe",
+			recipe = "logistics-powered-floor-tile"
+		},
+		{
+			type = "unlock-recipe",
+			recipe = "network-node"
+		},
+		{
+			type = "unlock-recipe",
+			recipe = "construct-node"
+		},
+		{
+			type = "unlock-recipe",
+			recipe = "bot-node"
+		},
 	},
 	prerequisites = {"automation-3"},
 	unit =

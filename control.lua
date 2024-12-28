@@ -18,7 +18,10 @@ end
 function BuiltEntity(event)
     debug_print("BuiltEntity " .. event.created_entity.name)
 
-    if event.created_entity.name == "powered-floor-tap"
+    if event.created_entity.name == "small-electric-pole" or
+	event.created_entity.name == "medium-electric-pole" or
+	event.created_entity.name == "big-electric-pole" or
+	event.created_entity.name == "substation"
     then    
         local pf_entity = event.created_entity
         local surface = pf_entity.surface
@@ -163,7 +166,8 @@ function IncludePoweredWidget(tiles, surface)
 		if 
 		currentTilename == "powered-floor-circuit-tile" or
 		currentTilename == "powered-floor-tile" or
-		currentTilename == "solar-powered-floor-tile"
+		currentTilename == "solar-powered-floor-tile" or
+		currentTilename == "logistics-powered-floor-tile"
 		then
 			if(currentTilename == "powered-floor-circuit-tile" )
 			then
@@ -173,6 +177,11 @@ function IncludePoweredWidget(tiles, surface)
 				pf_entity = surface.create_entity{name = "powered-floor-widget", position = {X,Y}, force = game.forces.neutral}
 				pf_entity.destructible = false
 				widget_name = "solar-floor-widget"
+			elseif(currentTilename == "logistics-powered-floor-tile")
+			then
+				pf_entity = surface.create_entity{name = "logistics-floor-widget", position = {X,Y}, force = game.forces.player}
+				pf_entity.destructible = false
+				widget_name = "powered-floor-widget"
 			else
 				widget_name = "powered-floor-widget"
 			end
@@ -202,8 +211,6 @@ if event.parameter == "debug"
 		game.players[event.player_index].print("unknown poflo parameter: " .. event.parameter)
 	end
 end
-
-
 
 script.on_event(defines.events.on_player_built_tile,	PlayerBuiltTile)
 script.on_event(defines.events.on_robot_built_tile, 	RobotBuiltTile)

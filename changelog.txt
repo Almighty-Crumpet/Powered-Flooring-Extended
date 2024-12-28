@@ -1,21 +1,49 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.5
+Date: 06. 05. 2023
+  Info:
+    - Update changelog formatting to meet the in-game standard
+  Major Features:
+    - Added Network Flooring Tile that will spread the logistics network 1 tile at a time
+      Useful for spreading your logistics network with your rails and leaving space for separate networks in-between.
+      Very useful when used in tandem with Nodes for a rail city block network with bot logistics to unload/load trains
+    - Added three types of nodes, which are simpler, smaller, roboports with their own specific functions
+      Network Node: Has a small area of logistics zone, useful in city blocks separated from the main network but cannot house bots.
+      Construct Node: Has a medium area of construction, useful when spread with the Network flooring as it will connect to the main network for building.
+      Bot Node: Has no logistics or construction zones, only houses bots.
+  Graphics:
+    - Added more flooring styles
+    - Temporary graphics in place for existing Nodes
+  Features:
+    - The Flooring Styles in the mod settings now has Optimizations
+    - Added some missing descriptions
+---------------------------------------------------------------------------------------------------
 Version: 0.0.4
-    Changes:
-        - Added changelog file
-        - Updated some low res textures for the border
-        - Removed Power Tap entity as it is no longer needed
-	- Made the hidden entities not draw in the map view (existing tiles will need to be replaced)
-	- Changed the tile colours to reflect the tiles themselves
+Date: 03. 05. 2023
+  Info:
+    - Added changelog file
+  Graphics:
+    - Updated low res textures for the border
+    - Changed the tile colours to reflect the tiles themselves (map view)
+  Optimizations:
+    - Removed Power Tap entity as it is no longer needed
+    - Made the hidden entities not draw in the map view (existing tiles will need to be replaced)
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.3
-    Changes:
-        - All flooring tiles now connect to all vanila power poles, this will allow flooring sections to be chained together when not physically touching and will connect the circuit network from flooring to power poles.
+Date: 01. 05. 2023
+  Ease of use:
+    - All flooring tiles now connect to all vanila power poles, this will allow flooring sections to be chained together when not physically touching and will connect the circuit network from flooring to power poles.
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.2
-    Changes:
-        - Updated Technology tree for balancing: 
-            Standard Powered Flooring can be researched after Autoation 3 is unlocked and Solar Powered Flooring can be researched after Space Science is unlocked.
+Date: 29. 04. 2023
+  Balancing:
+    - Updated Technology tree for balancing:
+      Powered flooring and the circuit flooring is now available to research after you research Automation 3
+      Solar Powered flooring is now unlocked after researching Space science
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.1
-    Changes:
-        - Initial release
+Date: 28. 04. 2023
+  Major Features:
+    - Solar floor panelling that produce 10kw per tile and provide power to entities on top of it (slightly imbalanced as will still produce power with an entity on top)
+    - Standard Powered Flooring that will share power between tiles and power entities on top of itself
+    - Circuit Powered Flooring that will do the same as the Standard with the added benefit or being connected to both Green and red circuits (access and provided by the Powered Floor Tap)

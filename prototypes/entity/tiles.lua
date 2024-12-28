@@ -19,7 +19,6 @@
 --                              (via powered-floor-widget, see entities file).
 
 local modName = "__PoweredFloorExtended__"
-local selectedStyle = settings.startup["flooring-style"].value
 
 data:extend({
 {   
@@ -38,24 +37,25 @@ data:extend({
     main =
     {
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/grid-1.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/tile.png",
         count = 16,
         size = 1,
         hr_version = 
         {
-          picture = modName .. "/graphic/" .. selectedStyle .. "/hr-grid-1.png",
+          picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/hr-tile.png",
           count = 16,
           scale = 0.5
         },
       }
     },
+
     inner_corner =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-inner-corner.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-inner-corner.png",
       count = 4,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-inner-corner.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
         count = 4,
         scale = 0.5
       },
@@ -63,11 +63,11 @@ data:extend({
 
     outer_corner =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-outer-corner.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-outer-corner.png",
       count = 4,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-outer-corner.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
         count = 4,
         scale = 0.5
       },
@@ -75,11 +75,11 @@ data:extend({
 
     side =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-side.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-side.png",
       count = 16,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-side.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-side.png",
         count = 16,
         scale = 0.5
       },
@@ -87,11 +87,11 @@ data:extend({
 
     u_transition =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-u.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-u.png",
       count = 2,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-u.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-u.png",
         count = 2,
         scale = 0.5
       },
@@ -99,11 +99,11 @@ data:extend({
 
     o_transition =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-o.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-o.png",
       count = 2,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-o.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-o.png",
         count = 2,
         scale = 0.5
       },
@@ -148,12 +148,12 @@ data:extend({
     main =
     {
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/grid-2.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/tile.png",
         count = 16,
         size = 1,
         hr_version = 
         {
-          picture = modName .. "/graphic/" .. selectedStyle .. "/hr-grid-2.png",
+          picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/hr-tile.png",
           count = 16,
           scale = 0.5
         },
@@ -162,11 +162,11 @@ data:extend({
     
     inner_corner =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-inner-corner.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-inner-corner.png",
       count = 4,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-inner-corner.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
         count = 4,
         scale = 0.5
       },
@@ -174,11 +174,11 @@ data:extend({
 
     outer_corner =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-outer-corner.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-outer-corner.png",
       count = 4,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-outer-corner.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
         count = 4,
         scale = 0.5
       },
@@ -186,11 +186,11 @@ data:extend({
 
     side =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-side.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-side.png",
       count = 16,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-side.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-side.png",
         count = 16,
         scale = 0.5
       },
@@ -198,11 +198,11 @@ data:extend({
 
     u_transition =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-u.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-u.png",
       count = 2,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-u.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-u.png",
         count = 2,
         scale = 0.5
       },
@@ -210,11 +210,11 @@ data:extend({
 
     o_transition =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-o.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-o.png",
       count = 2,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-o.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-o.png",
         count = 2,
         scale = 0.5
       },
@@ -259,12 +259,12 @@ data:extend({
     main =
     {
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/grid-3.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/tile.png",
         count = 16,
         size = 1,
         hr_version = 
         {
-          picture = modName .. "/graphic/" .. selectedStyle .. "/hr-grid-3.png",
+          picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/hr-tile.png",
           count = 16,
           scale = 0.5
         },
@@ -273,11 +273,11 @@ data:extend({
     
     inner_corner =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-inner-corner.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-inner-corner.png",
       count = 4,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-inner-corner.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
         count = 4,
         scale = 0.5
       },
@@ -285,11 +285,11 @@ data:extend({
 
     outer_corner =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-outer-corner.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-outer-corner.png",
       count = 4,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-outer-corner.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
         count = 4,
         scale = 0.5
       },
@@ -297,11 +297,11 @@ data:extend({
 
     side =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-side.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-side.png",
       count = 16,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-side.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-side.png",
         count = 16,
         scale = 0.5
       },
@@ -309,11 +309,11 @@ data:extend({
 
     u_transition =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-u.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-u.png",
       count = 2,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-u.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-u.png",
         count = 2,
         scale = 0.5
       },
@@ -321,11 +321,122 @@ data:extend({
 
     o_transition =
     {
-      picture = modName .. "/graphic/" .. selectedStyle .. "/border/grid-o.png",
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-o.png",
       count = 2,
       hr_version = 
       {
-        picture = modName .. "/graphic/" .. selectedStyle .. "/border/hr-grid-o.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-o.png",
+        count = 2,
+        scale = 0.5
+      },
+    },
+  },
+  walking_sound =
+  {
+    {
+      filename = "__base__/sound/walking/concrete-01.ogg",
+      volume = 1.2
+    },
+    {
+      filename = "__base__/sound/walking/concrete-02.ogg",
+      volume = 1.2
+    },
+    {
+      filename = "__base__/sound/walking/concrete-03.ogg",
+      volume = 1.2
+    },
+    {
+      filename = "__base__/sound/walking/concrete-04.ogg",
+      volume = 1.2
+    }
+  },
+  map_color={r=10, g=49, b=94},
+  pollution_absorption_per_second=0
+},
+
+{   
+  type = "tile",
+  name = "logistics-powered-floor-tile",
+  minable = {hardness = 0.01, mining_time = 0.01, result = "logistics-powered-floor-tile"},
+  mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
+  collision_mask = {"ground-tile"},
+  walking_speed_modifier = 0.3,
+  vehicle_speed_modifier = 0.3,
+  light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
+  layer = 67,
+  decorative_removal_probability = 1.0,
+  variants =
+  {
+    main =
+    {
+      {
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/tile.png",
+        count = 16,
+        size = 1,
+        hr_version = 
+        {
+          picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/hr-tile.png",
+          count = 16,
+          scale = 0.5
+        },
+      }
+    },
+    
+    inner_corner =
+    {
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-inner-corner.png",
+      count = 4,
+      hr_version = 
+      {
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
+        count = 4,
+        scale = 0.5
+      },
+    },
+
+    outer_corner =
+    {
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-outer-corner.png",
+      count = 4,
+      hr_version = 
+      {
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
+        count = 4,
+        scale = 0.5
+      },
+    },
+
+    side =
+    {
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-side.png",
+      count = 16,
+      hr_version = 
+      {
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-side.png",
+        count = 16,
+        scale = 0.5
+      },
+    },
+
+    u_transition =
+    {
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-u.png",
+      count = 2,
+      hr_version = 
+      {
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-u.png",
+        count = 2,
+        scale = 0.5
+      },
+    },
+
+    o_transition =
+    {
+      picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-o.png",
+      count = 2,
+      hr_version = 
+      {
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-o.png",
         count = 2,
         scale = 0.5
       },
