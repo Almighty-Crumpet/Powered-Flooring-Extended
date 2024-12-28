@@ -41,6 +41,7 @@ data:extend ({
       percent = 100
     }
   },
+  protected_from_tile_building = false,
   collision_mask = {"ground-tile"},
   collision_box = {{-0.15, -0.15}, {0.15, 0.15}},  -- collision mask affects effect radius somehow
   walking_speed_modifier = 2.0,
@@ -102,6 +103,7 @@ data:extend ({
       percent = 100
     }
   },
+  protected_from_tile_building = false,
   collision_mask = {"ground-tile"},
   collision_box = {{-0.15, -0.15}, {0.15, 0.15}},  -- collision mask affects effect radius somehow
   walking_speed_modifier = 2.0,
@@ -161,6 +163,7 @@ data:extend ({
       percent = 100
     }
   },
+  protected_from_tile_building = false,
   energy_source =
   {
     type = "electric",
@@ -216,6 +219,7 @@ data:extend ({
       percent = 30
     }
   },
+  protected_from_tile_building = false,
   energy_source =
   {
     type = "electric",
