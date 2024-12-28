@@ -78,15 +78,22 @@ function EntityConnectable(some_entity)
 	local connectable
 	
 	-- if we want to connect control wires to everything that takes them:
-	--[[connectable = 
-	   (some_entity.prototype.max_circuit_wire_distance ~= nil and 
-		some_entity.prototype.max_circuit_wire_distance ~= 0) or
-	   (some_entity.prototype.max_wire_distance ~= nil and 
-	some_entity.prototype.max_wire_distance ~= 0) ]]--
-    
-   
-   return some_entity.name == "powered-floor-tap" or some_entity.name == "powered-floor-circuit-widget"
-
+	
+		
+	--connectable = 
+	--(
+	--	some_entity.prototype.max_circuit_wire_distance ~= nil and 
+	--	some_entity.prototype.max_circuit_wire_distance ~= 0
+	--)
+	--or
+	--(
+	--	some_entity.prototype.max_wire_distance ~= nil and 
+	--	some_entity.prototype.max_wire_distance ~= 0
+	--) 
+	
+    --return some_entity.name == "powered-floor-tap" or some_entity.name == "powered-floor-circuit-widget"
+	--return connectable
+	return some_entity.name == "small-electric-pole" or some_entity.name == "big-electric-pole" or some_entity.name == "medium-electric-pole" or some_entity.name == "substation" or some_entity.name == "powered-floor-circuit-widget"
 end
 
 
