@@ -25,6 +25,7 @@ data:extend ({
   icon_size = 32,
   flags = {
     "not-blueprintable",
+    "not-deconstructable",
     "placeable-neutral",
     "player-creation",
     "not-on-map"
@@ -84,6 +85,7 @@ data:extend ({
   icon_size = 32,
   flags = {
     "not-blueprintable",
+    "not-deconstructable",
     "placeable-neutral",
     "player-creation",
     "not-on-map"
@@ -139,10 +141,11 @@ data:extend ({
 {
   type = "solar-panel",
   name = "solar-floor-widget",
-  icon = modName .. "/graphic/powered-floor-icon.png",
+  icon = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/icon/tile.png",
   icon_size = 32,
   flags = {
     "not-blueprintable",
+    "not-deconstructable",
     "placeable-neutral",
     "player-creation",
     "not-on-map"
@@ -188,10 +191,11 @@ data:extend ({
 {
   type = "roboport",
   name = "logistics-floor-widget",
-  icon = modName .. "/graphic/powered-floor-icon.png",
+  icon = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/icon/tile.png",
   icon_size = 32,
   flags = {
     "not-blueprintable",
+    "not-deconstructable",
     "placeable-neutral",
     "player-creation",
     "not-on-map"
@@ -217,22 +221,19 @@ data:extend ({
     type = "electric",
     usage_priority = "secondary-input",
     input_flow_limit = "5MW",
-    buffer_capacity = "100MJ"
+    buffer_capacity = "2MJ"
   },
-  recharge_minimum = "40MJ",
-  energy_usage = "50kW",
+  recharge_minimum = "1MJ",
+  energy_usage = "1kW",
   -- per one charge slot
-  charging_energy = "1000kW",
+  charging_energy = "1kW",
   logistics_radius = 0.5,
   construction_radius = 0,
   charge_approach_distance = 5,
   robot_slots_count = 0,
   material_slots_count = 0,
   stationing_offset = {0, 0},
-  charging_offsets =
-  {
-    {-1.5, -0.5}, {1.5, -0.5}, {1.5, 1.5}, {-1.5, 1.5}
-  },
+  charging_offsets = {},
   base = blank_image,
   base_patch = blank_image,
   base_animation = blank_image,
@@ -356,32 +357,32 @@ data:extend ({
       layers =
       {
         {
-          filename = modName .. "/graphic/Nodes/base.png",
+          filename = modName .. "/graphic/Nodes/Network/base.png",
           width = 1000,
           height = 1000,
-          scale = 0.12,
+          scale = 0.6,
           hr_version =
           {
-            filename = modName .. "/graphic/Nodes/base.png",
+            filename = modName .. "/graphic/Nodes/Network/base.png",
             width = 1000,
             height = 1000,
             scale = 0.12
           }
         },
         {
-          filename = modName .. "/graphic/Nodes/Network/node-shadow.png",
-          width = 352,
-          height = 352,
+          filename = modName .. "/graphic/Nodes/base-shadow.png",
+          width = 1000,
+          height = 1000,
           draw_as_shadow = true,
-          scale = 0.5,
+          scale = 0.6,
           hr_version =
           {
-            filename = modName .. "/graphic/Nodes/Network/node-shadow.png",
-            width = 352,
-            height = 352,
+            filename = modName .. "/graphic/Nodes/base-shadow.png",
+            width = 1000,
+            height = 1000,
             draw_as_shadow = true,
             force_hr_shadow = true,
-            scale = 0.5
+            scale = 0.12
           }
         }
       }
@@ -514,32 +515,32 @@ data:extend ({
       layers =
       {
         {
-          filename = modName .. "/graphic/Nodes/base.png",
+          filename = modName .. "/graphic/Nodes/Construct/base.png",
           width = 1000,
           height = 1000,
-          scale = 0.12,
+          scale = 0.6,
           hr_version =
           {
-            filename = modName .. "/graphic/Nodes/base.png",
+            filename = modName .. "/graphic/Nodes/Construct/base.png",
             width = 1000,
             height = 1000,
             scale = 0.12
           }
         },
         {
-          filename = modName .. "/graphic/Nodes/Network/node-shadow.png",
-          width = 352,
-          height = 352,
+          filename = modName .. "/graphic/Nodes/base-shadow.png",
+          width = 1000,
+          height = 1000,
           draw_as_shadow = true,
-          scale = 0.5,
+          scale = 0.6,
           hr_version =
           {
-            filename = modName .. "/graphic/Nodes/Network/node-shadow.png",
-            width = 352,
-            height = 352,
+            filename = modName .. "/graphic/Nodes/base-shadow.png",
+            width = 1000,
+            height = 1000,
             draw_as_shadow = true,
             force_hr_shadow = true,
-            scale = 0.5
+            scale = 0.12
           }
         }
       }
@@ -671,32 +672,32 @@ data:extend ({
       layers =
       {
         {
-          filename = modName .. "/graphic/Nodes/base.png",
+          filename = modName .. "/graphic/Nodes/Bot/base.png",
           width = 1000,
           height = 1000,
-          scale = 0.12,
+          scale = 0.6,
           hr_version =
           {
-            filename = modName .. "/graphic/Nodes/base.png",
+            filename = modName .. "/graphic/Nodes/Bot/base.png",
             width = 1000,
             height = 1000,
             scale = 0.12
           }
         },
         {
-          filename = modName .. "/graphic/Nodes/Network/node-shadow.png",
-          width = 352,
-          height = 352,
+          filename = modName .. "/graphic/Nodes/base-shadow.png",
+          width = 1000,
+          height = 1000,
           draw_as_shadow = true,
-          scale = 0.5,
+          scale = 0.6,
           hr_version =
           {
-            filename = modName .. "/graphic/Nodes/Network/node-shadow.png",
-            width = 352,
-            height = 352,
+            filename = modName .. "/graphic/Nodes/base-shadow.png",
+            width = 1000,
+            height = 1000,
             draw_as_shadow = true,
             force_hr_shadow = true,
-            scale = 0.5
+            scale = 0.12
           }
         }
       }
@@ -770,5 +771,5 @@ data:extend ({
       rotate = false,
       orientation_to_variation = false
     }
-  },
+  }
 })

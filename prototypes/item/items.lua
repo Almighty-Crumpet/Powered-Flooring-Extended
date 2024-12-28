@@ -29,7 +29,7 @@ data:extend({
 {
     type = "item",
     name = "solar-floor-widget",
-    icon = modName .. "/graphic/powered-floor-icon.png",
+    icon = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/icon/tile.png",
     icon_size = 32,
     flags = {"hidden"},
     subgroup = "energy-pipe-distribution",
@@ -41,7 +41,7 @@ data:extend({
 {
     type = "item",
     name = "logistics-floor-widget",
-    icon = modName .. "/graphic/powered-floor-icon.png",
+    icon = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/icon/tile.png",
     icon_size = 32,
     flags = {"hidden"},
     subgroup = "logistic-network",

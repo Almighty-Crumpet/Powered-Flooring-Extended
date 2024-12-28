@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.6
+Date: 08. 05. 2023
+  Bug Fixes:
+    - Components of the flooring that made them do their thing could be deconstructed removing their functionality while the tile itself would remain
+    - Added missing icons for the flooring tiles in the power display
+---------------------------------------------------------------------------------------------------
 Version: 0.0.5
 Date: 06. 05. 2023
   Info:
