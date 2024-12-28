@@ -14,11 +14,7 @@ data:extend({
 		},
 		{
 			type = "unlock-recipe",
-			recipe = "powered-floor-circuit-tile"
-		},
-		{
-			type = "unlock-recipe",
-			recipe = "logistics-powered-floor-tile"
+			recipe = "logistics-floor-tile"
 		},
 		{
 			type = "unlock-recipe",
@@ -57,10 +53,10 @@ data:extend({
 	{
 		{
 			type = "unlock-recipe",
-			recipe = "solar-powered-floor-tile"
+			recipe = "solar-floor-tile"
 		}
 	},
-	prerequisites = {"space-science-pack"},
+	prerequisites = {"space-science-pack","powered-floors"},
 	unit =
 		{
 			count = 10,

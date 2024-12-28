@@ -16,13 +16,13 @@ data:extend({
 
 {
     type = "item",
-    name = "powered-floor-circuit-widget",
+    name = "circuit-floor-widget",
     icon = modName .. "/graphic/powered-floor-icon.png",
     icon_size = 32,
     flags = {"hidden"},
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-p5[medium-electric-pole]",
-    place_result = "powered-floor-circuit-widget",
+    place_result = "circuit-floor-widget",
     stack_size = 500
 },
 
@@ -45,7 +45,7 @@ data:extend({
     icon_size = 32,
     flags = {"hidden"},
     subgroup = "logistic-network",
-    order = "c[signal]-b[logistic-widget]",
+    order = "c[signal]-b[logistics-floor-widget]",
     place_result = "logistics-floor-widget",
     stack_size = 500
 },
@@ -61,30 +61,30 @@ data:extend({
     place_as_tile =
     {
         result = "powered-floor-tile",
-        condition_size = 3,
+        condition_size = 2,
         condition = { "water-tile" }
     }
 },
 
 {
     type = "item",
-    name = "powered-floor-circuit-tile",
+    name = "circuit-floor-tile",
     icon = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/icon/tile.png",
     icon_size = 32,
     subgroup = "terrain",
-    order = "c[powered]-b[powered-floor-circuit-tile]",
+    order = "c[powered]-b[circuit-floor-tile]",
     stack_size = 1000,
     place_as_tile =
     {
-        result = "powered-floor-circuit-tile",
-        condition_size = 3,
+        result = "circuit-floor-tile",
+        condition_size = 2,
         condition = { "water-tile" }
     }
 },
 
 {
     type = "item",
-    name = "solar-powered-floor-tile",
+    name = "solar-floor-tile",
     icon = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/icon/tile.png",
     icon_size = 32,
     subgroup = "terrain",
@@ -92,15 +92,15 @@ data:extend({
     stack_size = 1000,
     place_as_tile =
     {
-        result = "solar-powered-floor-tile",
-        condition_size = 3,
+        result = "solar-floor-tile",
+        condition_size = 2,
         condition = { "water-tile" }
     }
 },
 
 {
     type = "item",
-    name = "logistics-powered-floor-tile",
+    name = "logistics-floor-tile",
     icon = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/icon/tile.png",
     icon_size = 32,
     subgroup = "terrain",
@@ -108,8 +108,8 @@ data:extend({
     stack_size = 1000,
     place_as_tile =
     {
-        result = "logistics-powered-floor-tile",
-        condition_size = 3,
+        result = "logistics-floor-tile",
+        condition_size = 2,
         condition = { "water-tile" }
     }
 },

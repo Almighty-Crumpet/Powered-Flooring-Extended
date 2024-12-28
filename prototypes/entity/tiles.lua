@@ -24,11 +24,9 @@ data:extend({
 {   
   type = "tile",
   name = "powered-floor-tile",
-  needs_correction = false,
-  minable = {mining_time = 0.01, result = "powered-floor-tile"},
+  minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-tile"},
   mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
   collision_mask = {"ground-tile"},
-  check_collision_with_entities = false,
   walking_speed_modifier = 2.0,
   vehicle_speed_modifier = 2.0,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
@@ -136,11 +134,10 @@ data:extend({
 
 {   
   type = "tile",
-  name = "powered-floor-circuit-tile",
-  minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-circuit-tile"},
+  name = "circuit-floor-tile",
+  minable = {hardness = 0.01, mining_time = 0.01, result = "circuit-floor-tile"},
   mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
   collision_mask = {"ground-tile"},
-  check_collision_with_entities = false,
   walking_speed_modifier = 2.0,
   vehicle_speed_modifier = 2.0,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
@@ -248,11 +245,10 @@ data:extend({
 
 {   
   type = "tile",
-  name = "solar-powered-floor-tile",
-  minable = {hardness = 0.01, mining_time = 0.01, result = "solar-powered-floor-tile"},
+  name = "solar-floor-tile",
+  minable = {hardness = 0.01, mining_time = 0.01, result = "solar-floor-tile"},
   mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
   collision_mask = {"ground-tile"},
-  check_collision_with_entities = false,
   walking_speed_modifier = 0.3,
   vehicle_speed_modifier = 0.3,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
@@ -360,11 +356,10 @@ data:extend({
 
 {   
   type = "tile",
-  name = "logistics-powered-floor-tile",
-  minable = {hardness = 0.01, mining_time = 0.01, result = "logistics-powered-floor-tile"},
+  name = "logistics-floor-tile",
+  minable = {hardness = 0.01, mining_time = 0.01, result = "logistics-floor-tile"},
   mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
   collision_mask = {"ground-tile"},
-  check_collision_with_entities = false,
   walking_speed_modifier = 0.3,
   vehicle_speed_modifier = 0.3,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},

@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.8
+Date: 09. 06. 2023
+  Changes:
+    - Entity names changed amd migration script added to update existing entities to match new name
+    - Logistics flooring now carries the Red/Green circuit network
+    - Construction Node area doubled
+---------------------------------------------------------------------------------------------------
 Version: 0.0.7
 Date: 04. 06. 2023
   Bug Fixes:

@@ -4,22 +4,6 @@ data:extend({
 -- Flooring
 {
   type = "recipe",
-  name = "powered-floor-circuit-tile",
-  enabled = "false",
-  ingredients =
-  {
-    {"green-wire", 10},
-    {"powered-floor-tile", 10},
-    {"red-wire", 10}
-  },
-	energy_required = .75,
-  result = "powered-floor-circuit-tile",
-  requester_paste_multiplier = 10,
-  result_count = 10
-},
-
-{
-  type = "recipe",
   name = "powered-floor-tile",
   enabled = "false",
   ingredients =
@@ -36,7 +20,23 @@ data:extend({
 
 {
   type = "recipe",
-  name = "solar-powered-floor-tile",
+  name = "circuit-floor-tile",
+  enabled = "false",
+  ingredients =
+  {
+    {"green-wire", 10},
+    {"powered-floor-tile", 10},
+    {"red-wire", 10}
+  },
+	energy_required = .75,
+  result = "circuit-floor-tile",
+  requester_paste_multiplier = 10,
+  result_count = 10
+},
+
+{
+  type = "recipe",
+  name = "solar-floor-tile",
   enabled = "false",
   ingredients =
   {
@@ -44,22 +44,22 @@ data:extend({
     {"solar-panel", 1}
   },
   energy_required = 0.5,
-  result = "solar-powered-floor-tile",
+  result = "solar-floor-tile",
   requester_paste_multiplier = 10,
   result_count = 10
 },
 
 {
   type = "recipe",
-  name = "logistics-powered-floor-tile",
+  name = "logistics-floor-tile",
   enabled = "false",
   ingredients =
   {
     {"powered-floor-tile", 20},
-    {"roboport", 1}
+    {"network-node", 1}
   },
   energy_required = 0.5,
-  result = "logistics-powered-floor-tile",
+  result = "logistics-floor-tile",
   requester_paste_multiplier = 5,
   result_count = 20
 },
@@ -70,7 +70,7 @@ data:extend({
   enabled = "false",
   ingredients =
   {
-    {"logistics-powered-floor-tile", 4},
+    {"logistics-floor-tile", 4},
     {"roboport", 1}
   },
   energy_required = 0.5,

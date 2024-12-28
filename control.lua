@@ -6,6 +6,38 @@ function debug_print(str)
 	end
 end
 
+function Set (list)
+	local set = {}
+	for _, l in ipairs(list) do 
+		set[l] = true 
+	end
+	return set
+  end
+
+local tileNames = Set {
+	"powered-floor-tile",
+	"circuit-floor-tile",
+	"solar-floor-tile",
+	"logistics-floor-tile"
+}
+
+local connectableEntities = Set {
+	"small-electric-pole",
+	"medium-electric-pole",
+	"big-electric-pole",
+	"substation",
+	"circuit-floor-widget"
+}
+
+function contains(list, x)
+	for _, v in pairs(list) do
+		if v == x 
+		then 
+			return true 
+		end
+	end
+	return false
+end
 
 -- Event Handler for on_built_entity and on_robot_built_entity
 --
@@ -13,15 +45,11 @@ end
 -- they auto connect both control wires to neighboring powered floor taps and widgets
 
 
-
-
 function BuiltEntity(event)
     debug_print("BuiltEntity " .. event.created_entity.name)
 
-    if event.created_entity.name == "small-electric-pole" or
-	event.created_entity.name == "medium-electric-pole" or
-	event.created_entity.name == "big-electric-pole" or
-	event.created_entity.name == "substation"
+	--if (contains(connectableEntities, event.created_entity.name))
+	if connectableEntities[event.created_entity.name]
     then    
         local pf_entity = event.created_entity
         local surface = pf_entity.surface
@@ -81,8 +109,6 @@ function EntityConnectable(some_entity)
 	local connectable
 	
 	-- if we want to connect control wires to everything that takes them:
-	
-		
 	--connectable = 
 	--(
 	--	some_entity.prototype.max_circuit_wire_distance ~= nil and 
@@ -94,9 +120,7 @@ function EntityConnectable(some_entity)
 	--	some_entity.prototype.max_wire_distance ~= 0
 	--) 
 	
-    --return some_entity.name == "powered-floor-tap" or some_entity.name == "powered-floor-circuit-widget"
-	--return connectable
-	return some_entity.name == "small-electric-pole" or some_entity.name == "big-electric-pole" or some_entity.name == "medium-electric-pole" or some_entity.name == "substation" or some_entity.name == "powered-floor-circuit-widget"
+	return connectableEntities[some_entity.name]
 end
 
 
@@ -163,38 +187,33 @@ function IncludePoweredWidget(tiles, surface)
 
 		debug_print("IncludePowered tilename is " .. currentTilename .. " at " .. X .. "," .. Y)
 
-		if 
-		currentTilename == "powered-floor-circuit-tile" or
-		currentTilename == "powered-floor-tile" or
-		currentTilename == "solar-powered-floor-tile" or
-		currentTilename == "logistics-powered-floor-tile"
+		if (tileNames[currentTilename])
 		then
-			if(currentTilename == "powered-floor-circuit-tile" )
+			if (currentTilename == "logistics-floor-tile")
 			then
-				widget_name = "powered-floor-circuit-widget"  
-			elseif(currentTilename == "solar-powered-floor-tile")
-			then
-				pf_entity = surface.create_entity{name = "powered-floor-widget", position = {X,Y}, force = game.forces.neutral}
-				pf_entity.destructible = false
-				widget_name = "solar-floor-widget"
-			elseif(currentTilename == "logistics-powered-floor-tile")
-			then
-				pf_entity = surface.create_entity{name = "logistics-floor-widget", position = {X,Y}, force = game.forces.player}
-				pf_entity.destructible = false
-				widget_name = "powered-floor-widget"
-			else
-				widget_name = "powered-floor-widget"
-			end
-			debug_print("IncludePowered add " .. widget_name)
-			pf_entity = surface.create_entity{name = widget_name, position = {X,Y}, force = game.forces.neutral}
-			pf_entity.destructible = false
-
-			if currentTilename == "powered-floor-circuit-tile"
-			then
+				createPoweredEntity(surface, "logistics-floor-widget", X, Y)
+				createPoweredEntity(surface, "circuit-floor-widget", X, Y)
 				IncludeControlWiresToNeighbors( pf_entity, surface )
+			elseif (currentTilename == "circuit-floor-tile")
+			then
+				createPoweredEntity(surface, "circuit-floor-widget", X, Y)
+				IncludeControlWiresToNeighbors( pf_entity, surface )
+			else
+				createPoweredEntity(surface, "powered-floor-widget", X, Y)
+			end
+
+			if (currentTilename == "solar-floor-tile")
+			then
+				createPoweredEntity(surface, "powered-floor-widget", X, Y)
+				createPoweredEntity(surface, "solar-floor-widget", X, Y)
 			end
 		end
 	end
+end
+
+function createPoweredEntity(surface, widgetName, X, Y)
+	pf_entity = surface.create_entity{name = widgetName, position = {X,Y}, force = game.forces.player}
+	pf_entity.destructible = false
 end
 
 local function on_poflo_command(event)

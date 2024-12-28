@@ -27,7 +27,14 @@ data:extend{
         type = "string-setting",
         name = "network-flooring-style",
         setting_type = "startup",
-        default_value = "Triangle-Grey",
+        default_value = "Default",
         allowed_values = styles(),
+    },
+    {
+        type = "string-setting",
+        name = "enable-circuit-flooring",
+        setting_type = "startup",
+        default_value = "No",
+        allowed_values = {"Yes","No"},
     }
 }

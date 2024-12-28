@@ -16,11 +16,19 @@ local blank_image = {
   shift = { 0, 0 },
 }
 
+-- collision box affects effect radius somehow
+local collision_box = {{-0.15, -0.15}, {0.15, 0.15}}
+local selection_box = {{-0.25, -0.25}, {0.25, 0.25}}
+local collision_mask = {
+  "ground-tile"
+}
+
 -- Widgets
 data:extend ({
 {
   type = "electric-pole",
   name = "powered-floor-widget",
+  protected_from_tile_building = false,
   icon = modName .. "/graphic/powered-floor-icon.png",
   icon_size = 32,
   flags = {
@@ -34,6 +42,7 @@ data:extend ({
   max_health = 5000,
   corpse = "small-remnants",
   draw_copper_wires = false,
+  draw_circuit_wires = false,
   resistances =
   {
     {
@@ -41,12 +50,8 @@ data:extend ({
       percent = 100
     }
   },
-  protected_from_tile_building = false,
-  collision_mask = {"ground-tile"},
-  collision_box = {{-0.15, -0.15}, {0.15, 0.15}},  -- collision mask affects effect radius somehow
-  walking_speed_modifier = 2.0,
-  vehicle_speed_modifier = 2.0,
-  -- selection_box = {{-0.5, -0.5}, {0.5, 0.5}},   -- selection box makes it a mineable entity rather than mineable tire
+  collision_mask = collision_mask,
+  collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   maximum_wire_distance = 1,
   max_circuit_wire_distance = 1,
@@ -81,7 +86,8 @@ data:extend ({
 
 {
   type = "electric-pole",
-  name = "powered-floor-circuit-widget",
+  name = "circuit-floor-widget",
+  protected_from_tile_building = false,
   icon = modName .. "/graphic/powered-floor-icon.png",
   icon_size = 32,
   flags = {
@@ -91,7 +97,7 @@ data:extend ({
     "player-creation",
     "not-on-map"
   },
-  minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-circuit-widget"},
+  minable = {hardness = 0.01, mining_time = 0.01, result = "circuit-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
   draw_copper_wires = false,
@@ -103,11 +109,8 @@ data:extend ({
       percent = 100
     }
   },
-  protected_from_tile_building = false,
-  collision_mask = {"ground-tile"},
-  collision_box = {{-0.15, -0.15}, {0.15, 0.15}},  -- collision mask affects effect radius somehow
-  walking_speed_modifier = 2.0,
-  -- selection_box = {{-0.5, -0.5}, {0.5, 0.5}},   -- selection box makes it a mineable entity rather than mineable tire
+  collision_mask = collision_mask,
+  collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   maximum_wire_distance = 1,
   max_circuit_wire_distance = 1,
@@ -143,6 +146,7 @@ data:extend ({
 {
   type = "solar-panel",
   name = "solar-floor-widget",
+  protected_from_tile_building = false,
   icon = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/icon/tile.png",
   icon_size = 32,
   flags = {
@@ -163,18 +167,14 @@ data:extend ({
       percent = 100
     }
   },
-  protected_from_tile_building = false,
   energy_source =
   {
     type = "electric",
     usage_priority = "solar"
   },
   production = "10kW",
-  collision_mask = {"ground-tile"},
-  collision_box = {{-0.15, -0.15}, {0.15, 0.15}},  -- collision mask affects effect radius somehow
-  walking_speed_modifier = 2.0,
-  vehicle_speed_modifier = 2.0,
-  -- selection_box = {{-0.5, -0.5}, {0.5, 0.5}},   -- selection box makes it a mineable entity rather than mineable tire
+  collision_mask = collision_mask,
+  collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   vehicle_impact_sound =  { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
   picture =
@@ -194,6 +194,7 @@ data:extend ({
 {
   type = "roboport",
   name = "logistics-floor-widget",
+  protected_from_tile_building = false,
   icon = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/icon/tile.png",
   icon_size = 32,
   flags = {
@@ -206,8 +207,9 @@ data:extend ({
   minable = {mining_time = 0.1, result = "logistics-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
-  collision_mask = {"ground-tile"},
-  collision_box = {{-0.15, -0.15}, {0.15, 0.15}},
+  collision_mask = collision_mask,
+  collision_box = collision_box,
+  light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   resistances =
   {
     {
@@ -219,7 +221,6 @@ data:extend ({
       percent = 30
     }
   },
-  protected_from_tile_building = false,
   energy_source =
   {
     type = "electric",
@@ -505,7 +506,7 @@ data:extend ({
     charging_energy = "1000kW",
     logistics_radius = 0,
     logistics_connection_distance = 1,
-    construction_radius = 32,
+    construction_radius = 64,
     charge_approach_distance = 5,
     robot_slots_count = 0,
     material_slots_count = 0,
