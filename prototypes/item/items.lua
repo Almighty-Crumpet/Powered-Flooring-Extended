@@ -52,7 +52,7 @@ data:extend({
 {
     type = "item",
     name = "powered-floor-tile",
-    icon = modName .. "/graphic/powered-floor-icon.png",
+    icon = modName .. "/graphic/" .. selectedStyle .. "/icon/grid-1.png",
     icon_size = 32,
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-p1[powered-floor-tile]",
@@ -68,7 +68,7 @@ data:extend({
 {
     type = "item",
     name = "powered-floor-circuit-tile",
-    icon = modName .. "/graphic/powered-floor-circuit-icon.png",
+    icon = modName .. "/graphic/" .. selectedStyle .. "/icon/grid-2.png",
     icon_size = 32,
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-p2[powered-floor-circuit-tile]",
@@ -84,7 +84,7 @@ data:extend({
 {
     type = "item",
     name = "solar-powered-floor-tile",
-    icon = modName .. "/graphic/slow-powered-floor-icon.png",
+    icon = modName .. "/graphic/" .. selectedStyle .. "/icon/grid-3.png",
     icon_size = 32,
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-p3[solar-floor-tile]",
