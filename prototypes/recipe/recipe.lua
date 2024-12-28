@@ -70,7 +70,7 @@ data:extend({
   enabled = "false",
   ingredients =
   {
-    {"logistics-floor-tile", 4},
+    {"powered-floor-tile", 4},
     {"roboport", 1}
   },
   energy_required = 0.5,
