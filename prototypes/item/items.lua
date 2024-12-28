@@ -28,19 +28,8 @@ data:extend({
 
 {
     type = "item",
-    name = "powered-floor-tap",
-    icon = modName .. "/graphic/powered-floor-tap.png",
-    icon_size = 32,
-    subgroup = "energy-pipe-distribution",
-    order = "a[energy]-p3[powered-floor-tap]",
-    place_result = "powered-floor-tap",
-    stack_size = 500
-},
-
-{
-    type = "item",
     name = "solar-floor-widget",
-    icon = modName .. "/graphic/powered-floor-tap.png",
+    icon = modName .. "/graphic/powered-floor-icon.png",
     icon_size = 32,
     flags = {"hidden"},
     subgroup = "energy-pipe-distribution",

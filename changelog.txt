@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.4
+    Changes:
+        - Added changelog file
+        - Updated some low res textures for the border
+        - Removed Power Tap entity as it is no longer needed
+	- Made the hidden entities not draw in the map view (existing tiles will need to be replaced)
+	- Changed the tile colours to reflect the tiles themselves
+---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+    Changes:
+        - All flooring tiles now connect to all vanila power poles, this will allow flooring sections to be chained together when not physically touching and will connect the circuit network from flooring to power poles.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+    Changes:
+        - Updated Technology tree for balancing: 
+            Standard Powered Flooring can be researched after Autoation 3 is unlocked and Solar Powered Flooring can be researched after Space Science is unlocked.
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+    Changes:
+        - Initial release

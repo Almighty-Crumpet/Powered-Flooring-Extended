@@ -4,25 +4,6 @@ local selectedStyle = settings.startup["flooring-style"].value
 data:extend({
 {
   type = "recipe",
-  name = "powered-floor-tap",
-  enabled = "false",
-  ingredients =
-  {
-    {"electronic-circuit", 1},
-    {"copper-cable", 1},
-    {"copper-plate", 1},
-    {"green-wire", 1},
-    {"iron-plate", 1},
-    {"red-wire", 1}
-  },
-	energy_required = 1,
-  result = "powered-floor-tap",
-  requester_paste_multiplier = 10,
-  result_count = 1
-},
-
-{
-  type = "recipe",
   name = "powered-floor-circuit-tile",
   enabled = "false",
   ingredients =

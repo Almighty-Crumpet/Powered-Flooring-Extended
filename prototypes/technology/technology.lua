@@ -11,10 +11,6 @@ data:extend({
 	{
 		{
 			type = "unlock-recipe",
-			recipe = "powered-floor-tap"
-		},
-		{
-			type = "unlock-recipe",
 			recipe = "powered-floor-tile"
 		},
 		{

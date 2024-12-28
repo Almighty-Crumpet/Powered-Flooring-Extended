@@ -128,7 +128,7 @@ data:extend({
       volume = 1.2
     }
   },
-  map_color={r=50, g=80, b=80},
+  map_color={r=192, g=192, b=192},
   pollution_absorption_per_second=0,
 },
 
@@ -239,7 +239,7 @@ data:extend({
       volume = 1.2
     }
   },
-  map_color={r=50, g=80, b=80},
+  map_color={r=192, g=192, b=192},
   pollution_absorption_per_second=0
 },
 
@@ -350,7 +350,7 @@ data:extend({
       volume = 1.2
     }
   },
-  map_color={r=50, g=80, b=80},
+  map_color={r=10, g=49, b=94},
   pollution_absorption_per_second=0
 }
 })

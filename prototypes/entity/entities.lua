@@ -4,9 +4,6 @@
 --   powered-floor-widget        electric-pole type
 --   powered-floor-circuit-widget Same as powered-floor-widget, handled differently in control.lua
 --   solar-floor-widget         Acts as a solar powered electric provider
---   powered-floor-tap          Not a tile, more like a very small electric-pole, 
---                              that also transmits red and green circuit signals to 
---                              adjacent powered-floor-circuit-tiles and powered-floor-taps
 
 local modName = "__PoweredFloorExtended__"
 local selectedStyle = settings.startup["flooring-style"].value
@@ -17,7 +14,7 @@ data:extend({
   name = "powered-floor-widget",
   icon = modName .. "/graphic/powered-floor-icon.png",
   icon_size = 32,
-  flags = {"placeable-neutral", "player-creation"},
+  flags = {"placeable-neutral", "player-creation","not-on-map"},
   minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
@@ -49,7 +46,8 @@ data:extend({
     direction_count = 1,
     shift = {0, 0}
   },
-  render_layer="floor",
+  render_layer="water-tile",
+  map_color=nil,
   connection_points =
   {
     {
@@ -70,7 +68,7 @@ data:extend({
   name = "powered-floor-circuit-widget",
   icon = modName .. "/graphic/powered-floor-icon.png",
   icon_size = 32,
-  flags = {"placeable-neutral", "player-creation"},
+  flags = {"placeable-neutral", "player-creation","not-on-map"},
   minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-circuit-widget"},
   max_health = 5000,
   corpse = "small-remnants",
@@ -102,7 +100,8 @@ data:extend({
     direction_count = 1,
     shift = {0, 0}
   },
-  render_layer="floor",
+  render_layer="water-tile",
+  map_color=nil,
   connection_points =
   {
     {
@@ -119,63 +118,11 @@ data:extend({
 },
 
 {
-  type = "electric-pole",
-  name = "powered-floor-tap",
-  icon = modName .. "/graphic/powered-floor-icon.png",
-  icon_size = 32,
-  flags = {"placeable-neutral", "player-creation"},
-  minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-tap"},
-  max_health = 5000,
-  corpse = "small-remnants",
-  resistances =
-  {
-    {
-      type = "fire",
-      percent = 100
-    }
-  },
-  collision_box = {{-0.15, -0.15}, {0.15, 0.15}}, 
-  walking_speed_modifier = 2.0,
-  light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
-  selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
-  drawing_box = {{-0.5, -0.5}, {0.5, 0.5}},
-  maximum_wire_distance = 2.5,
-  max_circuit_wire_distance = 1000,
-  supply_area_distance = 0.5,
-  vehicle_impact_sound =  { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
-  pictures =
-  {
-    filename = modName .. "/graphic/powered-floor-tap.png",
-    priority = "low",
-    width = 32,
-    height = 32,
-    
-    axially_symmetrical = true,
-    direction_count = 1,
-    shift = {0, 0}
-  },
-  render_layer="floor",
-  connection_points =
-  {
-    {
-      shadow =  {  copper = {0, 0}, green = {0.2,0.0}, red = {0.2,0.0}  },
-      wire =    {  copper = {0, 0}, green = {0.1,0.0}, red = {0.0,0.1}  }
-    }
-  },
-  radius_visualisation_picture =
-  {
-    filename = "__base__/graphics/entity/small-electric-pole/electric-pole-radius-visualization.png",
-    width = 12,
-    height = 12
-  }
-},
-
-{
   type = "solar-panel",
   name = "solar-floor-widget",
   icon = modName .. "/graphic/powered-floor-icon.png",
   icon_size = 32,
-  flags = {"placeable-neutral", "player-creation"},
+  flags = {"placeable-neutral", "player-creation","not-on-map"},
   minable = {hardness = 0.01, mining_time = 0.01, result = "solar-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
@@ -210,6 +157,7 @@ data:extend({
     direction_count = 1,
     shift = {0, 0}
   },
-  render_layer="floor"
+  render_layer="water-tile",
+  map_color=nil
 }
 })
