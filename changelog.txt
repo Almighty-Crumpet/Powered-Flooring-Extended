@@ -1,8 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.11
+Date: 29. 12. 2024
+  Changes:
+    - Removed migration script as it's causing issues
+---------------------------------------------------------------------------------------------------
 Version: 0.0.10
 Date: 28. 12. 2024
   Changes:
     - Updated for Base Game 2.0
+    - Removed duplication of powered widget when placing solar flooring
+    - Resolved wires not connecting properly when placing solar flooring
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.8
 Date: 09. 06. 2023
