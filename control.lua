@@ -1,11 +1,3 @@
-
-function debug_print(str)
-	if global.poflo_debug
-	then
-		game.print(str)
-	end
-end
-
 function Set (list)
 	local set = {}
 	for _, l in ipairs(list) do 
@@ -40,18 +32,12 @@ function contains(list, x)
 end
 
 -- Event Handler for on_built_entity and on_robot_built_entity
---
--- powered-floor-taps are normal entities (like a stubby electric-pole) except
--- they auto connect both control wires to neighboring powered floor taps and widgets
-
-
 function BuiltEntity(event)
-    debug_print("BuiltEntity " .. event.created_entity.name)
-
+    local pf_entity = event.entity
+	--debug_print("BuiltEntity " .. event.created_entity.name)
 	--if (contains(connectableEntities, event.created_entity.name))
-	if connectableEntities[event.created_entity.name]
+	if connectableEntities[pf_entity.name]
     then    
-        local pf_entity = event.created_entity
         local surface = pf_entity.surface
         IncludeControlWiresToNeighbors( pf_entity, surface )
     end
@@ -62,7 +48,7 @@ end
 --
 -- Add the widget
 function PlayerBuiltTile(event)
-    debug_print("PlayerBuiltTile")
+    --debug_print("PlayerBuiltTile")
     local player = game.players[event.player_index]
     if player ~= nil and event.tiles ~= nil and player.surface ~= nil
     then
@@ -84,18 +70,18 @@ end
 --
 -- Add the widget
 function RobotBuiltTile(event)
-    debug_print("RobotBuiltTile")
+    --debug_print("RobotBuiltTile")
     if(event.robot ~= nil)
     then
-    	debug_print("RobotBuiltTile event.robot not nil")
+    	--debug_print("RobotBuiltTile event.robot not nil")
     	if(event.robot.surface ~= nil)
     	then
-    		debug_print("RobotBuiltTile event.robot.surface not nil")
+    	--	debug_print("RobotBuiltTile event.robot.surface not nil")
     	else
-    		debug_print("RobotBuiltTile event.robot.surface is nil")
+    	--	debug_print("RobotBuiltTile event.robot.surface is nil")
     	end
     else
-    	debug_print("RobotBuiltTile event.robot is nil")
+    	--debug_print("RobotBuiltTile event.robot is nil")
     end
     if(event.robot ~= nil and event.robot.surface ~= nil)
     then 
@@ -106,20 +92,6 @@ end
 
 -- returns whether some_entity should be connected with a control wire
 function EntityConnectable(some_entity)
-	local connectable
-	
-	-- if we want to connect control wires to everything that takes them:
-	--connectable = 
-	--(
-	--	some_entity.prototype.max_circuit_wire_distance ~= nil and 
-	--	some_entity.prototype.max_circuit_wire_distance ~= 0
-	--)
-	--or
-	--(
-	--	some_entity.prototype.max_wire_distance ~= nil and 
-	--	some_entity.prototype.max_wire_distance ~= 0
-	--) 
-	
 	return connectableEntities[some_entity.name]
 end
 
@@ -127,23 +99,28 @@ end
 -- connect red and green wires from a powered floor tap or widget to another entity if appropriate
 function IncludeControlWires(pf_entity, some_entity)
 
-    debug_print("IncludeControlWires some_entity.name=" .. some_entity.name)
+    --debug_print("IncludeControlWires some_entity.name=" .. some_entity.name)
     
     connectable = EntityConnectable(some_entity)
     if connectable
     then
-        debug_print("IncludeControlWires connecting neighbor with control wires " 
-         	.. pf_entity.position.x .. "," .. pf_entity.position.y .. " to "
-        	.. some_entity.position.x .. "," .. some_entity.position.y  )
+        --debug_print("IncludeControlWires connecting neighbor with control wires " 
+        -- 	.. pf_entity.position.x .. "," .. pf_entity.position.y .. " to "
+        --	.. some_entity.position.x .. "," .. some_entity.position.y  )
         	
-        target = { wire = defines.wire_type.green, target_entity = some_entity }
-        pf_entity.connect_neighbour(target)
-        
-		target = { wire = defines.wire_type.red, target_entity = some_entity }
-		pf_entity.connect_neighbour(target)
+		-- Grab the wire connector of the target
+		targetRedConnector = some_entity.get_wire_connector(defines.wire_connector_id.circuit_red ,true)
+		targetGreenConnector = some_entity.get_wire_connector(defines.wire_connector_id.circuit_green ,true)
+		-- Grab the wire connector of the current entity
+		entityRedConnectors = pf_entity.get_wire_connector(defines.wire_connector_id.circuit_red ,true)
+		entityGreenConnectors = pf_entity.get_wire_connector(defines.wire_connector_id.circuit_green ,true)
+		-- Connect both the red and green wires
+
+		entityRedConnectors.connect_to(targetRedConnector)
+		entityGreenConnectors.connect_to(targetGreenConnector)
 
     else
-    	debug_print("IncludeControlWires not connectable")
+    	--debug_print("IncludeControlWires not connectable")
     end
 end
 
@@ -151,18 +128,18 @@ end
 function IncludeControlWiresToNeighbors(pf_entity, surface)
 	local X = pf_entity.position.x 
 	local Y = pf_entity.position.y  
-	debug_print("IncludeControlWiresToNeighbors looking around " .. X .. "," .. Y)
-	elist = surface.find_entities_filtered{ area={{X-1.0, Y-1.0}, {X+1.0, Y+1.0}} }
+	--debug_print("IncludeControlWiresToNeighbors looking around " .. X .. "," .. Y)
+	elist = surface.find_entities_filtered{ area={{X-1.5, Y-1.5}, {X+1.5, Y+1.5}} }
 	
 	for i, other_entity in ipairs(elist)
 	do
-		debug_print("IncludeControlWiresToNeighbors found entity " .. other_entity.name .. " type " .. other_entity.type .. " at " .. other_entity.position.x .. "," .. other_entity.position.y)
+		--debug_print("IncludeControlWiresToNeighbors found entity " .. other_entity.name .. " type " .. other_entity.type .. " at " .. other_entity.position.x .. "," .. other_entity.position.y)
 
 		if( other_entity.position.x == X and other_entity.position.y == Y  )
 		then
-			debug_print("IncludeControlWiresToNeighbors that's me")
+		--	debug_print("IncludeControlWiresToNeighbors that's me")
 		else
-			debug_print("IncludeControlWiresToNeighbors found entity at " .. other_entity.position.x .. "," .. other_entity.position.y)
+		--	debug_print("IncludeControlWiresToNeighbors found entity at " .. other_entity.position.x .. "," .. other_entity.position.y)
 			IncludeControlWires(pf_entity,other_entity )
 		end
 	end
@@ -171,13 +148,13 @@ end
 -- when adding tiles, include a hidden widget which has power wires
 -- if it's a circuit tile, add the circuit wires too
 function IncludePoweredWidget(tiles, surface)
-	debug_print("IncludePoweredWidget")
+	--debug_print("IncludePoweredWidget")
 
 
 	for i, oldtile in ipairs(tiles)
 	do
 		local position = oldtile.position
-		debug_print("IncludePoweredWidget x " .. position.x .. " y " .. position.y )
+		--debug_print("IncludePoweredWidget x " .. position.x .. " y " .. position.y )
 		local currentTile = surface.get_tile(position.x,position.y)
 
 		local currentTilename = surface.get_tile(position.x,position.y).name
@@ -185,7 +162,7 @@ function IncludePoweredWidget(tiles, surface)
 		local X = position.x
 		local Y = position.y
 
-		debug_print("IncludePowered tilename is " .. currentTilename .. " at " .. X .. "," .. Y)
+		--debug_print("IncludePowered tilename is " .. currentTilename .. " at " .. X .. "," .. Y)
 
 		if (tileNames[currentTilename])
 		then
@@ -198,14 +175,12 @@ function IncludePoweredWidget(tiles, surface)
 			then
 				createPoweredEntity(surface, "circuit-floor-widget", X, Y)
 				IncludeControlWiresToNeighbors( pf_entity, surface )
+			elseif (currentTilename == "solar-floor-tile")
+			then
+				createPoweredEntity(surface, "solar-floor-widget", X, Y)
+				createPoweredEntity(surface, "powered-floor-widget", X, Y)
 			else
 				createPoweredEntity(surface, "powered-floor-widget", X, Y)
-			end
-
-			if (currentTilename == "solar-floor-tile")
-			then
-				createPoweredEntity(surface, "powered-floor-widget", X, Y)
-				createPoweredEntity(surface, "solar-floor-widget", X, Y)
 			end
 		end
 	end
@@ -214,25 +189,16 @@ end
 function createPoweredEntity(surface, widgetName, X, Y)
 	pf_entity = surface.create_entity{name = widgetName, position = {X,Y}, force = game.forces.player}
 	pf_entity.destructible = false
-end
-
-local function on_poflo_command(event)
-
-if event.parameter == "debug"
-	then
-		global.poflo_debug = true
-		debug_print("poflo debugging is on")
-	elseif event.parameter == "nodebug"
-	then
-		debug_print("poflo debugging is off")
-		global.poflo_debug = false
-	else
-		game.players[event.player_index].print("unknown poflo parameter: " .. event.parameter)
-	end
+	pf_entity.update_connections()
 end
 
 script.on_event(defines.events.on_player_built_tile,	PlayerBuiltTile)
 script.on_event(defines.events.on_robot_built_tile, 	RobotBuiltTile)
-script.on_event(defines.events.on_built_entity, 		BuiltEntity)
-script.on_event(defines.events.on_robot_built_entity, 	BuiltEntity)
-commands.add_command( "poflo", "Powered Floor [ debug | nodebug ] ", on_poflo_command )
+script.on_event({
+	defines.events.on_built_entity,
+	defines.events.on_robot_built_entity,
+    defines.events.script_raised_built,
+    defines.events.script_raised_revive,
+	}, function(e) 
+	BuiltEntity(e)
+end)

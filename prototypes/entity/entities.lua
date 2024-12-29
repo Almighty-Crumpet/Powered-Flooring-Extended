@@ -6,6 +6,7 @@
 --   solar-floor-widget         Acts as a solar powered electric provider
 
 local modName = "__PoweredFloorExtended__"
+local tile_collision_masks = require("__base__/prototypes/tile/tile-collision-masks")
 local blank_image = {
   direction_count = 1,
   filename = modName .. "/graphic/blank.png",
@@ -19,9 +20,6 @@ local blank_image = {
 -- collision box affects effect radius somehow
 local collision_box = {{-0.15, -0.15}, {0.15, 0.15}}
 local selection_box = {{-0.25, -0.25}, {0.25, 0.25}}
-local collision_mask = {
-  "ground-tile"
-}
 
 -- Widgets
 data:extend ({
@@ -50,8 +48,9 @@ data:extend ({
       percent = 100
     }
   },
-  collision_mask = collision_mask,
+  collision_mask = tile_collision_masks.ground(),
   collision_box = collision_box,
+  --selection_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   maximum_wire_distance = 1,
   max_circuit_wire_distance = 1,
@@ -109,7 +108,7 @@ data:extend ({
       percent = 100
     }
   },
-  collision_mask = collision_mask,
+  collision_mask = tile_collision_masks.ground(),
   collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   maximum_wire_distance = 1,
@@ -159,7 +158,6 @@ data:extend ({
   minable = {hardness = 0.01, mining_time = 0.01, result = "solar-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
-  draw_copper_wires = false,
   resistances =
   {
     {
@@ -173,7 +171,7 @@ data:extend ({
     usage_priority = "solar"
   },
   production = "10kW",
-  collision_mask = collision_mask,
+  collision_mask = tile_collision_masks.ground(),
   collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   vehicle_impact_sound =  { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
@@ -207,7 +205,7 @@ data:extend ({
   minable = {mining_time = 0.1, result = "logistics-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
-  collision_mask = collision_mask,
+  collision_mask = tile_collision_masks.ground(),
   collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   resistances =
@@ -362,33 +360,20 @@ data:extend ({
       layers =
       {
         {
-          filename = modName .. "/graphic/Nodes/Network/base.png",
-          width = 1000,
-          height = 1000,
-          scale = 0.6,
-          hr_version =
-          {
+         
             filename = modName .. "/graphic/Nodes/Network/base.png",
             width = 1000,
             height = 1000,
             scale = 0.12
-          }
         },
         {
-          filename = modName .. "/graphic/Nodes/base-shadow.png",
-          width = 1000,
-          height = 1000,
-          draw_as_shadow = true,
-          scale = 0.6,
-          hr_version =
-          {
+          
             filename = modName .. "/graphic/Nodes/base-shadow.png",
             width = 1000,
             height = 1000,
             draw_as_shadow = true,
             force_hr_shadow = true,
             scale = 0.12
-          }
         }
       }
     },
@@ -520,33 +505,20 @@ data:extend ({
       layers =
       {
         {
-          filename = modName .. "/graphic/Nodes/Construct/base.png",
-          width = 1000,
-          height = 1000,
-          scale = 0.6,
-          hr_version =
-          {
+          
             filename = modName .. "/graphic/Nodes/Construct/base.png",
             width = 1000,
             height = 1000,
             scale = 0.12
-          }
         },
         {
-          filename = modName .. "/graphic/Nodes/base-shadow.png",
-          width = 1000,
-          height = 1000,
-          draw_as_shadow = true,
-          scale = 0.6,
-          hr_version =
-          {
+          
             filename = modName .. "/graphic/Nodes/base-shadow.png",
             width = 1000,
             height = 1000,
             draw_as_shadow = true,
             force_hr_shadow = true,
             scale = 0.12
-          }
         }
       }
     },
@@ -677,33 +649,20 @@ data:extend ({
       layers =
       {
         {
-          filename = modName .. "/graphic/Nodes/Bot/base.png",
-          width = 1000,
-          height = 1000,
-          scale = 0.6,
-          hr_version =
-          {
+          
             filename = modName .. "/graphic/Nodes/Bot/base.png",
             width = 1000,
             height = 1000,
             scale = 0.12
-          }
         },
         {
-          filename = modName .. "/graphic/Nodes/base-shadow.png",
-          width = 1000,
-          height = 1000,
-          draw_as_shadow = true,
-          scale = 0.6,
-          hr_version =
-          {
+          
             filename = modName .. "/graphic/Nodes/base-shadow.png",
             width = 1000,
             height = 1000,
             draw_as_shadow = true,
             force_hr_shadow = true,
             scale = 0.12
-          }
         }
       }
     },

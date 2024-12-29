@@ -1,9 +1,9 @@
 {
   "name": "PoweredFloorExtended",
   "author": "Crumpet",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "title": "Powered Floor Extended",
   "description": "Flooring that transmits power to adjacent objects",
-  "factorio_version":"1.1",
-  "dependencies": ["base >= 1.1.0"]
+  "factorio_version": "2.0",
+  "dependencies": ["base >= 2.0.0"]
 }

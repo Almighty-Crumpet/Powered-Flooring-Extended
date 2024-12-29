@@ -1,4 +1,5 @@
 local modName = "__PoweredFloorExtended__"
+local tile_collision_masks = require("__base__/prototypes/tile/tile-collision-masks")
 
 data:extend({
 -- Hidden Widgets
@@ -7,7 +8,7 @@ data:extend({
     name = "powered-floor-widget",
     icon = modName .. "/graphic/powered-floor-icon.png",
     icon_size = 32,
-    flags = {"hidden"},
+    hidden = true,
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-p4[medium-electric-pole]",
     place_result = "powered-floor-widget",
@@ -19,7 +20,7 @@ data:extend({
     name = "circuit-floor-widget",
     icon = modName .. "/graphic/powered-floor-icon.png",
     icon_size = 32,
-    flags = {"hidden"},
+    hidden = true,
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-p5[medium-electric-pole]",
     place_result = "circuit-floor-widget",
@@ -31,7 +32,7 @@ data:extend({
     name = "solar-floor-widget",
     icon = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/icon/tile.png",
     icon_size = 32,
-    flags = {"hidden"},
+    hidden = true,
     subgroup = "energy-pipe-distribution",
     order = "a[energy]-p4[medium-electric-pole]",
     place_result = "solar-floor-widget",
@@ -43,7 +44,7 @@ data:extend({
     name = "logistics-floor-widget",
     icon = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/icon/tile.png",
     icon_size = 32,
-    flags = {"hidden"},
+    hidden = true,
     subgroup = "logistic-network",
     order = "c[signal]-b[logistics-floor-widget]",
     place_result = "logistics-floor-widget",
@@ -61,8 +62,8 @@ data:extend({
     place_as_tile =
     {
         result = "powered-floor-tile",
-        condition_size = 2,
-        condition = { "water-tile" }
+        condition_size = 1,
+        condition = {layers={water_tile=true}}
     }
 },
 
@@ -77,8 +78,8 @@ data:extend({
     place_as_tile =
     {
         result = "circuit-floor-tile",
-        condition_size = 2,
-        condition = { "water-tile" }
+        condition_size = 1,
+        condition = {layers={water_tile=true}}
     }
 },
 
@@ -93,8 +94,8 @@ data:extend({
     place_as_tile =
     {
         result = "solar-floor-tile",
-        condition_size = 2,
-        condition = { "water-tile" }
+        condition_size = 1,
+        condition = {layers={water_tile=true}}
     }
 },
 
@@ -109,8 +110,8 @@ data:extend({
     place_as_tile =
     {
         result = "logistics-floor-tile",
-        condition_size = 2,
-        condition = { "water-tile" }
+        condition_size = 1,
+        condition = {layers={water_tile=true}}
     }
 },
 -- Nodes

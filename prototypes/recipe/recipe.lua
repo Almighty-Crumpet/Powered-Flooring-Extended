@@ -5,107 +5,101 @@ data:extend({
 {
   type = "recipe",
   name = "powered-floor-tile",
-  enabled = "false",
+  enabled = false,
   ingredients =
   {
-    {"copper-cable", 10},
-    {"copper-plate", 1},
-    {"iron-plate", 1}
+    {type = "item", name = "copper-cable", amount = 10},
+    {type = "item", name = "copper-plate", amount = 1},
+    {type = "item", name = "iron-plate", amount = 1}
   },
 	energy_required = 0.5,
-  result = "powered-floor-tile",
-  requester_paste_multiplier = 10,
-  result_count = 10
+  results = {{type = "item", name = "powered-floor-tile", amount = 10}},
+  requester_paste_multiplier = 10
 },
 
 {
   type = "recipe",
   name = "circuit-floor-tile",
-  enabled = "false",
+  enabled = false,
   ingredients =
   {
-    {"green-wire", 10},
-    {"powered-floor-tile", 10},
-    {"red-wire", 10}
+    {type = "item", name = "green-wire", amount = 10},
+    {type = "item", name = "powered-floor-tile", amount = 10},
+    {type = "item", name = "red-wire", amount = 10}
   },
 	energy_required = .75,
-  result = "circuit-floor-tile",
-  requester_paste_multiplier = 10,
-  result_count = 10
+  results = {{type = "item", name = "circuit-floor-tile", amount = 10}},
+  requester_paste_multiplier = 10
 },
 
 {
   type = "recipe",
   name = "solar-floor-tile",
-  enabled = "false",
+  enabled = false,
   ingredients =
   {
-    {"powered-floor-tile", 10},
-    {"solar-panel", 1}
+    {type = "item", name = "powered-floor-tile", amount = 10},
+    {type = "item", name = "solar-panel", amount = 1}
   },
   energy_required = 0.5,
-  result = "solar-floor-tile",
-  requester_paste_multiplier = 10,
-  result_count = 10
+  results = {{type = "item", name = "solar-floor-tile", amount = 10}},
+  requester_paste_multiplier = 10
 },
 
 {
   type = "recipe",
   name = "logistics-floor-tile",
-  enabled = "false",
+  enabled = false,
   ingredients =
   {
-    {"powered-floor-tile", 20},
-    {"network-node", 1}
+    {type = "item", name = "powered-floor-tile", amount = 20},
+    {type = "item", name = "network-node", amount = 1}
   },
   energy_required = 0.5,
-  result = "logistics-floor-tile",
-  requester_paste_multiplier = 5,
-  result_count = 20
+  results = {{type = "item", name = "logistics-floor-tile", amount = 20}},
+  requester_paste_multiplier = 5
 },
 -- Nodes
 {
   type = "recipe",
   name = "network-node",
-  enabled = "false",
+  enabled = false,
   ingredients =
   {
-    {"powered-floor-tile", 4},
-    {"roboport", 1}
+    {type = "item", name = "powered-floor-tile", amount = 4},
+    {type = "item", name = "roboport", amount = 1}
   },
   energy_required = 0.5,
-  result = "network-node",
-  requester_paste_multiplier = 5,
-  result_count = 4
+  results = {{type = "item", name = "network-node", amount = 4}},
+  requester_paste_multiplier = 5
 },
 
 {
   type = "recipe",
   name = "construct-node",
-  enabled = "false",
+  enabled = false,
   ingredients =
   {
-    {"powered-floor-tile", 4},
-    {"roboport", 1}
+    {type = "item", name = "powered-floor-tile", amount = 4},
+    {type = "item", name = "roboport", amount = 1}
   },
   energy_required = 0.5,
-  result = "construct-node",
-  requester_paste_multiplier = 5,
-  result_count = 4
+  results = {{type = "item", name = "construct-node", amount = 4}},
+  requester_paste_multiplier = 5
 },
 
 {
   type = "recipe",
   name = "bot-node",
-  enabled = "false",
+  enabled = false,
   ingredients =
   {
-    {"powered-floor-tile", 4},
-    {"roboport", 1}
+    {type = "item", name = "powered-floor-tile", amount = 4},
+    {type = "item", name = "roboport", amount = 1}
   },
   energy_required = 0.5,
-  result = "bot-node",
-  requester_paste_multiplier = 5,
-  result_count = 4
-},
+  results = {{type = "item", name = "bot-node", amount = 4}},
+  requester_paste_multiplier = 5
+}
+
 })
