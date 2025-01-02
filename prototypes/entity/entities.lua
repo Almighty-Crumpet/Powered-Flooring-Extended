@@ -36,7 +36,7 @@ data:extend ({
     "player-creation",
     "not-on-map"
   },
-  minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-widget"},
+  minable = {mining_time = 0.01, result = "powered-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
   draw_copper_wires = false,
@@ -48,7 +48,7 @@ data:extend ({
       percent = 100
     }
   },
-  collision_mask = tile_collision_masks.ground(),
+  collision_mask = {layers = {water_tile = true, is_object = true, is_lower_object = true}, colliding_with_tiles_only = true},
   collision_box = collision_box,
   --selection_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
@@ -108,7 +108,7 @@ data:extend ({
       percent = 100
     }
   },
-  collision_mask = tile_collision_masks.ground(),
+  collision_mask = {layers = {water_tile = true, is_object = true, is_lower_object = true}, colliding_with_tiles_only = true},
   collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   maximum_wire_distance = 1,
@@ -131,7 +131,7 @@ data:extend ({
   {
     {
       shadow =  {  copper = {0, 0}  },
-      wire =    {  copper = {0, 0}  }
+      wire =    {  red = {-0.15, 0.15}, green = {0.15, -0.15}  }
     }
   },
   radius_visualisation_picture =
@@ -171,7 +171,7 @@ data:extend ({
     usage_priority = "solar"
   },
   production = "10kW",
-  collision_mask = tile_collision_masks.ground(),
+  collision_mask = {layers = {water_tile = true, is_object = true, is_lower_object = true}, colliding_with_tiles_only = true},
   collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   vehicle_impact_sound =  { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
@@ -205,7 +205,7 @@ data:extend ({
   minable = {mining_time = 0.1, result = "logistics-floor-widget"},
   max_health = 5000,
   corpse = "small-remnants",
-  collision_mask = tile_collision_masks.ground(),
+  collision_mask = {layers = {water_tile = true, is_object = true, is_lower_object = true}, colliding_with_tiles_only = true},
   collision_box = collision_box,
   light = {intensity = 0.6, size = 6, color = {r=0.01, g=0.03, b=0.08}},drawing_box = {{0,0}, {0,0}},
   resistances =
@@ -280,22 +280,7 @@ data:extend ({
   request_to_open_door_timeout = 15,
   spawn_and_station_height = -0.1,
   draw_logistic_radius_visualization = true,
-  draw_construction_radius_visualization = true,
-  water_reflection =
-  {
-    pictures =
-    {
-      filename = "__base__/graphics/entity/roboport/roboport-reflection.png",
-      priority = "extra-high",
-      width = 28,
-      height = 28,
-      shift = util.by_pixel(0, 75),
-      variation_count = 1,
-      scale = 5
-    },
-    rotate = false,
-    orientation_to_variation = false
-  }
+  draw_construction_radius_visualization = false,
 }
 
 })

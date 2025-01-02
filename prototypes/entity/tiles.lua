@@ -17,18 +17,89 @@
 --   solar-powered-floor-tile   Generates Electricity from the sun. 
 --                              Also transmits pwoer to adjacent powered-floor-* things.
 --                              (via powered-floor-widget, see entities file).
+require("__base__/prototypes/tile/tiles.lua")
 
 local modName = "__PoweredFloorExtended__"
 local tile_collision_masks = require("__base__/prototypes/tile/tile-collision-masks")
-local tile_transitions = require("__base__/prototypes/tile/tiles")
 local refined_concrete_sounds = sound_variations("__base__/sound/walking/refined-concrete", 11, 0.5)
+local tile_variants = 
+{
+  overlay_layout =
+  {
+    inner_corner =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-inner-corner.png",
+      count = 16,
+      scale = 0.5
+    },
+    outer_corner =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-outer-corner.png",
+      count = 8,
+      scale = 0.5
+    },
+    side =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-side.png",
+      count = 16,
+      scale = 0.5
+    },
+    u_transition =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-u.png",
+      count = 8,
+      scale = 0.5
+    },
+    o_transition =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-o.png",
+      count = 4,
+      scale = 0.5
+    }
+  },
+  mask_layout =
+  {
+    inner_corner =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-inner-corner-mask.png",
+      count = 16,
+      scale = 0.5
+    },
+    outer_corner =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-outer-corner-mask.png",
+      count = 8,
+      scale = 0.5
+    },
+    side =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-side-mask.png",
+      count = 16,
+      scale = 0.5
+    },
+    u_transition =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-u-mask.png",
+      count = 8,
+      scale = 0.5
+    },
+    o_transition =
+    {
+      spritesheet = "__base__/graphics/terrain/concrete/concrete-o-mask.png",
+      count = 4,
+      scale = 0.5
+    }
+  }
+}
 
 data:extend({
 {   
   type = "tile",
   name = "powered-floor-tile",
+  order = "a[artificial]-c[tier-4]-a[powered-floor-tile]",
+  subgroup = "artificial-tiles",
   needs_correction = false,
-  minable = {hardness = 0.01, mining_time = 0.01, result = "powered-floor-tile"},
+  minable = {mining_time = 0.01, result = "powered-floor-tile"},
   mined_sound = { filename = "__base__/sound/deconstruct-bricks.ogg" },
   collision_mask = tile_collision_masks.ground(),
   walking_speed_modifier = 2.0,
@@ -40,74 +111,15 @@ data:extend({
   variants =
   {
     main =
-    {{
-      picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/hr-tile.png",
-      count = 16,
-      size = 1,
-      scale = 0.5
-    },},
-    empty_transitions = true,
-    transition = 
     {
-      overlay_layout =
       {
-        inner_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-inner-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
-            count = 4,
-            scale = 1
-          },
-        },
-        outer_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-outer-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
-            count = 4,
-            scale = 1
-          },
-        },
-        side =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-side.png",
-          count = 16,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-side.png",
-            count = 16,
-            scale = 1
-          },
-        },
-        u_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-u.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-u.png",
-            count = 2,
-            scale = 1
-          },
-        },
-        o_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/grid-o.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/border/hr-grid-o.png",
-            count = 2,
-            scale = 1
-          },
-        },
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/tile.png",
+        count = 8,
+        size = 1,
+        scale = 0.25
       },
     },
+    transition = tile_variants,
   },
 
   transitions = concrete_transitions,
@@ -136,74 +148,13 @@ data:extend({
     main =
     {
       {
-        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/hr-tile.png",
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/tile.png",
         count = 16,
         size = 1,
         scale = 0.5
       },
     },
-    empty_transitions = true,
-    transition = 
-    {
-      overlay_layout = 
-      {
-        inner_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-inner-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
-            count = 4,
-            scale = 0.5
-          },
-        },
-        outer_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-outer-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
-            count = 4,
-            scale = 0.5
-          },
-        },
-        side =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-side.png",
-          count = 16,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-side.png",
-            count = 16,
-            scale = 0.5
-          },
-        },
-        u_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-u.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-u.png",
-            count = 2,
-            scale = 0.5
-          },
-        },
-        o_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/grid-o.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/border/hr-grid-o.png",
-            count = 2,
-            scale = 0.5
-          },
-        },
-      },
-    },
+    transition = tile_variants,
   },
 
   transitions = concrete_transitions,
@@ -231,74 +182,13 @@ data:extend({
     main =
     {
       {
-        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/hr-tile.png",
-        count = 16,
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/tile.png",
+        count = 8,
         size = 1,
-        scale = 0.5
+        scale = 0.25
       },
     },
-    empty_transitions = true,
-    transition = 
-    {
-      overlay_layout =
-      {
-        inner_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-inner-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
-            count = 4,
-            scale = 0.5
-          },
-        },
-        outer_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-outer-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
-            count = 4,
-            scale = 0.5
-          },
-        },
-        side =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-side.png",
-          count = 16,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-side.png",
-            count = 16,
-            scale = 0.5
-          },
-        },
-        u_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-u.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-u.png",
-            count = 2,
-            scale = 0.5
-          },
-        },
-        o_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/grid-o.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/border/hr-grid-o.png",
-            count = 2,
-            scale = 0.5
-          },
-        },
-      },
-    },
+    transition =  tile_variants,
   },
 
   transitions = concrete_transitions,
@@ -326,74 +216,13 @@ data:extend({
     main =
     {
       {
-        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/hr-tile.png",
-        count = 16,
+        picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/tile.png",
+        count = 8,
         size = 1,
-        scale = 0.5
+        scale = 0.25
       },
     },
-    empty_transitions = true,
-    transition = 
-    {
-      overlay_layout =
-      {
-        inner_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-inner-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-inner-corner.png",
-            count = 4,
-            scale = 0.5
-          },
-        },
-        outer_corner =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-outer-corner.png",
-          count = 4,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-outer-corner.png",
-            count = 4,
-            scale = 0.5
-          },
-        },
-        side =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-side.png",
-          count = 16,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-side.png",
-            count = 16,
-            scale = 0.5
-          },
-        },
-        u_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-u.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-u.png",
-            count = 2,
-            scale = 0.5
-          },
-        },
-        o_transition =
-        {
-          spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/grid-o.png",
-          count = 2,
-          hr_version = 
-          {
-            spritesheet = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/border/hr-grid-o.png",
-            count = 2,
-            scale = 0.5
-          },
-        },
-      },
-    },
+    transition =  tile_variants,
   },
   walking_sound = refined_concrete_sounds,
   map_color={r=10, g=49, b=94},

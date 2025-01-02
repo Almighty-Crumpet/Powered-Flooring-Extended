@@ -21,6 +21,16 @@ local connectableEntities = Set {
 	"circuit-floor-widget"
 }
 
+widgetEntities = function ()
+	return 
+	{
+	"powered-floor-widget",
+	"circuit-floor-widget",
+	"solar-floor-widget",
+	"logistics-floor-widget"
+	}
+end
+
 function contains(list, x)
 	for _, v in pairs(list) do
 		if v == x 
@@ -43,6 +53,45 @@ function BuiltEntity(event)
     end
 end
 
+function PlayerRemovedTile(event)
+	local player = game.players[event.player_index]
+	if player ~= nil and event.tiles ~= nil and player.surface ~= nil
+	then
+		RemoveOldEntities(event.tiles, player.surface)
+	end
+end
+
+function RobotRemovedTile(event)
+	if(event.robot ~= nil and event.robot.surface ~= nil)
+	then 
+		RemoveOldEntities(event.tiles, event.robot.surface)
+	end
+end
+
+function RemoveOldEntities(tiles, surface)
+	for i, oldtile in ipairs(tiles)
+	do
+		-- Get X/Y coordinates on tile
+		local oldPosition = oldtile.position
+		--log(oldPosition)
+				
+		local X = oldPosition.x + 0.5
+		local Y = oldPosition.y + 0.5
+
+		-- Get all entities at X/Y that match this mod widgets
+		local widgetsFound = surface.find_entities_filtered{position = {X, Y}, name = {"powered-floor-widget",	"circuit-floor-widget",	"solar-floor-widget", "logistics-floor-widget"}}
+		if (widgetsFound ~= nil)
+		then
+			-- Delete said widgets
+			for a, entity in ipairs(widgetsFound)
+			do
+				--log(entity.name)
+				--log(entity.position)
+				entity.destroy()
+			end
+		end
+	end
+end
 
 -- Event Handler for on_player_built_tile
 --
@@ -149,7 +198,7 @@ end
 -- if it's a circuit tile, add the circuit wires too
 function IncludePoweredWidget(tiles, surface)
 	--debug_print("IncludePoweredWidget")
-
+	RemoveOldEntities(tiles, surface)
 
 	for i, oldtile in ipairs(tiles)
 	do
@@ -202,3 +251,5 @@ script.on_event({
 	}, function(e) 
 	BuiltEntity(e)
 end)
+script.on_event(defines.events.on_player_mined_tile, PlayerRemovedTile) 
+script.on_event(defines.events.on_robot_mined_tile,	RobotRemovedTile)
