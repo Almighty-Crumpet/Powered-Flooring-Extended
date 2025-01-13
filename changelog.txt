@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.13
+Date: 13. 01. 2025
+  Changes:
+    - Updated Network Node so that it can recharge after fully draining without needing to be replaced
+---------------------------------------------------------------------------------------------------
 Version: 0.0.12
 Date: 02. 01. 2025
   Changes:

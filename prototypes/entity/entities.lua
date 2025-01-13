@@ -324,10 +324,10 @@ data:extend ({
       type = "electric",
       usage_priority = "secondary-input",
       input_flow_limit = "10MW",
-      buffer_capacity = "10MJ"
+      buffer_capacity = "100MJ"
     },
     recharge_minimum = "40MJ",
-    energy_usage = "100kW",
+    energy_usage = "10kW",
     -- per one charge slot
     charging_energy = "1000kW",
     logistics_radius = 20,
