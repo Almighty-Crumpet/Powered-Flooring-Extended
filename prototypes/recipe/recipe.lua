@@ -23,7 +23,7 @@ data:extend({
   enabled = false,
   ingredients =
   {
-    {type = "item", name = "copper-wire", amount = 20},
+    {type = "item", name = "copper-cable", amount = 20},
     {type = "item", name = "powered-floor-tile", amount = 10},
   },
 	energy_required = .75,
