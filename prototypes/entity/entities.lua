@@ -12,7 +12,7 @@ local hidden_flags = {
   "not-blueprintable",
   "not-deconstructable",
   "not-on-map",
-  "hidden"
+  "not-selectable-in-game" 
 }
 local blank_image = {
   direction_count = 1,
@@ -39,11 +39,11 @@ data:extend({
     minable = nil, corpse = nil, dying_explosion = nil, max_health = 1000000,
     draw_copper_wires = false, draw_circuit_wires = true,
     collision_box = collision_box, selection_box = selection_box,
-    render_layer = "below-carryable", collision_mask = [],
-    maximum_wire_distance = 1, supply_area_distance = 0.5,
+    render_layer = "below-carryable", collision_mask = {layers = {}},
+    maximum_wire_distance = 1, max_circuit_wire_distance = 1, supply_area_distance = 0.5,
     pictures = blank_image,
     energy_source = {type = "electric", buffer_capacity = "0kJ", usage_priority = "secondary-input"},
-    connection_points = {{shadow = {copper = {0,0}, circuit = {0,0}}, wire = {copper = {0,0}, circuit = {0.5,-0.5}}}}
+    connection_points = {{shadow = {copper = {0,0}, circuit = {0,0}}, wire = {copper = {0,0}, circuit = {0,0}}}}
   },
   {
     type = "electric-pole", name = "circuit-floor-widget",
@@ -51,7 +51,7 @@ data:extend({
     minable = nil, corpse = nil, dying_explosion = nil, max_health = 1000000,
     draw_copper_wires = true, draw_circuit_wires = true,
     collision_box = collision_box, selection_box = selection_box,
-    render_layer = "below-carryable", collision_mask = [],
+    render_layer = "below-carryable", collision_mask = {layers = {}},
     maximum_wire_distance = 1, max_circuit_wire_distance = 1, supply_area_distance = 0.5,
     pictures = blank_image,
     energy_source = {type = "electric", buffer_capacity = "0kJ", usage_priority = "secondary-input"},
@@ -62,7 +62,7 @@ data:extend({
     type = "solar-panel", name = "solar-floor-widget",
     flags = hidden_flags, icon = "__core__/graphics/empty.png", icon_size = 1,
     minable = nil, corpse = nil, dying_explosion = nil, max_health = 1000000,
-    collision_box = collision_box, selection_box = selection_box, collision_mask = [],
+    collision_box = collision_box, selection_box = selection_box, collision_mask = {layers = {}},
     energy_source = {type = "electric", usage_priority = "solar"}, production = "10kW",
     render_layer = "below-carryable",
     pictures = blank_image, source_inventory_size = 0
@@ -72,7 +72,7 @@ data:extend({
     type = "roboport", name = "logistics-floor-widget",
     flags = hidden_flags, icon = "__core__/graphics/empty.png", icon_size = 1,
     minable = nil, corpse = nil, dying_explosion = nil, max_health = 1000000,
-    collision_box = collision_box, selection_box = selection_box, collision_mask = {},
+    collision_box = collision_box, selection_box = nil, collision_mask = {layers = {}},
     render_layer = "below-carryable",
     logistics_radius = 0.5, construction_radius = 0,
     robot_slots_count = 0, material_slots_count = 0, charge_approach_distance = 5, charging_energy = "1kW",
