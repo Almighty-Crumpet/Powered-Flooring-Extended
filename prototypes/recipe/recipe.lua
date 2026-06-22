@@ -2,20 +2,18 @@ local modName = "__PoweredFloorExtended__"
 
 data:extend({
 -- Flooring
-{
-  type = "recipe",
-  name = "powered-floor-tile",
-  enabled = false,
-  ingredients =
   {
-    {type = "item", name = "copper-cable", amount = 10},
-    {type = "item", name = "copper-plate", amount = 1},
-    {type = "item", name = "iron-plate", amount = 1}
+    type = "recipe",
+    name = "powered-floor-tile",
+    enabled = false,
+    energy_required = 1,
+    ingredients = {
+      {type = "item", name = "iron-plate", amount = 2}, 
+      {type = "item", name = "copper-cable", amount = 2}
+    },
+    results = {{type = "item", name = "powered-floor-tile", amount = 4}},
+    requester_paste_multiplier = 10
   },
-	energy_required = 0.5,
-  results = {{type = "item", name = "powered-floor-tile", amount = 10}},
-  requester_paste_multiplier = 10
-},
 
 {
   type = "recipe",
