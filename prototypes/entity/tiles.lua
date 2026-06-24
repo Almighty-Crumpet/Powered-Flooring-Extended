@@ -50,8 +50,8 @@ data:extend({
     mined_sound = {filename = "__base__/sound/deconstruct-bricks.ogg"},
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 2.0, vehicle_speed_modifier = 2.0,
-    layer = 20, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/tile.png", count = 8, size = 1, scale = 0.25}}, transition = tile_variants},
+    layer = 22, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
+    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
     transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
     map_color = {r = 192, g = 192, b = 192}, subgroup = "artificial-tiles", order = "a[power]"
@@ -63,7 +63,7 @@ data:extend({
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 2, vehicle_speed_modifier = 2,
     layer = 21, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/tile.png", count = 16, size = 1, scale = 0.5}}, transition = tile_variants},
+    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
     transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
     map_color = {r = 192, g = 192, b = 192}, subgroup = "artificial-tiles", order = "b[circuit]"
@@ -74,8 +74,8 @@ data:extend({
     mined_sound = {filename = "__base__/sound/deconstruct-bricks.ogg"},
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 0.9, vehicle_speed_modifier = 0.9,
-    layer = 22, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/tile.png", count = 8, size = 1, scale = 0.25}}, transition = tile_variants},
+    layer = 20, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
+    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
     transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
     map_color = {r = 10, g = 49, b = 94}, subgroup = "artificial-tiles", order = "c[solar]"
@@ -87,7 +87,7 @@ data:extend({
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 2, vehicle_speed_modifier = 2,
     layer = 23, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/tile.png", count = 8, size = 1, scale = 0.25}}, transition = tile_variants},
+    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
     transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
     map_color = {r = 10, g = 49, b = 94}, subgroup = "artificial-tiles", order = "d[logistics]"

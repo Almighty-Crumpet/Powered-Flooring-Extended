@@ -37,8 +37,8 @@ data:extend({
     type = "electric-pole", name = "powered-floor-widget",
     flags = hidden_flags, icon = "__core__/graphics/empty.png", icon_size = 1,
     minable = nil, corpse = nil, dying_explosion = nil, max_health = 1000000,
-    draw_copper_wires = false, draw_circuit_wires = true,
-    collision_box = collision_box, selection_box = selection_box,
+    draw_copper_wires = false, draw_circuit_wires = false,
+    collision_box = collision_box, selection_box = nil,
     render_layer = "below-carryable", collision_mask = {layers = {}},
     maximum_wire_distance = 1, max_circuit_wire_distance = 1, supply_area_distance = 0.5,
     pictures = blank_image,
@@ -49,8 +49,8 @@ data:extend({
     type = "electric-pole", name = "circuit-floor-widget",
     flags = hidden_flags, icon = "__core__/graphics/empty.png", icon_size = 1,
     minable = nil, corpse = nil, dying_explosion = nil, max_health = 1000000,
-    draw_copper_wires = true, draw_circuit_wires = true,
-    collision_box = collision_box, selection_box = selection_box,
+    draw_copper_wires = false, draw_circuit_wires = false,
+    collision_box = collision_box, selection_box = nil,
     render_layer = "below-carryable", collision_mask = {layers = {}},
     maximum_wire_distance = 1, max_circuit_wire_distance = 1, supply_area_distance = 0.5,
     pictures = blank_image,
@@ -60,9 +60,9 @@ data:extend({
   -- Solar Generation
   {
     type = "solar-panel", name = "solar-floor-widget",
-    flags = hidden_flags, icon = "__core__/graphics/empty.png", icon_size = 1,
+    flags = hidden_flags, icon = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/icon/tile.png", icon_size = 32,
     minable = nil, corpse = nil, dying_explosion = nil, max_health = 1000000,
-    collision_box = collision_box, selection_box = selection_box, collision_mask = {layers = {}},
+    collision_box = collision_box, selection_box = nil, collision_mask = {layers = {}},
     energy_source = {type = "electric", usage_priority = "solar"}, production = "10kW",
     render_layer = "below-carryable",
     pictures = blank_image, source_inventory_size = 0
@@ -75,12 +75,21 @@ data:extend({
     collision_box = collision_box, selection_box = nil, collision_mask = {layers = {}},
     render_layer = "below-carryable",
     logistics_radius = 0.5, construction_radius = 0,
-    robot_slots_count = 0, material_slots_count = 0, charge_approach_distance = 5, charging_energy = "1kW",
-    pictures = blank_image, energy_usage = "0kW", recharge_minimum = "0kW", spawn_and_station_height = -0.1,
-    energy_source = {type = "electric", buffer_capacity = "0kJ", usage_priority = "secondary-input"},
-    draw_logistic_radius_visualization = false, draw_construction_radius_visualization = false,
+    robot_slots_count = 0, material_slots_count = 0, charge_approach_distance = 5,
+    base = blank_image,
+    base_patch = blank_image,
+    base_animation = blank_image,
+    door_animation_up = blank_image,
+    door_animation_down = blank_image,
+    recharging_animation = blank_image,
+    energy_usage = "0W", charging_energy = "0W", recharge_minimum = "0W", spawn_and_station_height = -0.1, charging_offsets = {},
+    energy_source = {
+        type = "void"
+    },
+    draw_logistic_radius_visualization = true, draw_construction_radius_visualization = false,
     working_sound = nil, recharging_light = nil, request_to_open_door_timeout = 0
-  },
+  }
+
 })
 
 -- Nodes
