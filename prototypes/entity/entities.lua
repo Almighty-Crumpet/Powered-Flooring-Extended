@@ -106,12 +106,31 @@ data:extend ({
     recharge_minimum = "40MJ", energy_usage = "10kW", charge_approach_distance = 5, charging_energy = "1000kW",
     logistics_radius = 20, construction_radius = 0,
     robot_slots_count = 0, material_slots_count = 0,
-    pictures = {
+    base = {
       layers = {
-        {draw_as_shadow = true, filename = "__base__/graphics/entity/roboport/roboport-shadow.png", width = 64, height = 64, shift = util.by_pixel(-4, 5)},
-        {filename = "__base__/graphics/entity/roboport/roboport.png", width = 64, height = 64, shift = util.by_pixel(0, 0)}
+        {
+          filename = modName .. "/graphic/Nodes/Network/base.png",
+          width = 512,
+          height = 512,
+          scale = 0.125
+        },
+        {
+          filename = modName .. "/graphic/Nodes/shadow.png",
+          width = 512,
+          height = 512,
+          scale = 0.125,
+          draw_as_shadow = true,
+          matrix = {
+        1.5,   0.0,   
+        0.75,  0.03,  
+        0.0,   0.0
+      },
+      -- Adjusted coordinates to anchor this newly flattened, wide shadow to the base corner
+      shift = {0.58, -0.12}, 
+        }
       }
     },
+
     draw_logistic_radius_visualization = true, draw_construction_radius_visualization = false,
     working_sound = {sound = {filename = "__base__/sound/roboport-working.ogg", volume = 0.4}, max_sounds_per_type = 3, audible_distance_modifier = 0.75},
     recharging_light = {intensity = 0.2, size = 3, color = {r = 0.5, g = 0.5, b = 1.0}},
@@ -125,23 +144,6 @@ data:extend ({
     minable = {mining_time = 0.1, result = "construct-node"},
     max_health = 500, corpse = "roboport-remnants", dying_explosion = "roboport-explosion",
     collision_box = {{-0.7, -0.7}, {0.7, 0.7}}, selection_box = {{-1, -1}, {1, 1}},
-    damaged_trigger_effect = {
-      entity_name = "spark-explosion",
-      offset_deviation = {{-0.5,-0.5},{0.5,0.5}},
-      offsets = {{0,1}},
-      type = "create-entity"
-    },
-    resistances =
-    {
-      {
-        type = "fire",
-        percent = 60
-      },
-      {
-        type = "impact",
-        percent = 30
-      }
-    },
     energy_source =
     {
       type = "electric",
@@ -164,25 +166,13 @@ data:extend ({
     {
       {-1.5, -0.5}, {1.5, -0.5}, {1.5, 1.5}, {-1.5, 1.5}
     },
-    base =
-    {
-      layers =
-      {
+    base = {
+      layers = {
         {
-          
-            filename = modName .. "/graphic/Nodes/Construct/base.png",
-            width = 1000,
-            height = 1000,
-            scale = 0.12
-        },
-        {
-          
-            filename = modName .. "/graphic/Nodes/base-shadow.png",
-            width = 1000,
-            height = 1000,
-            draw_as_shadow = true,
-            force_hr_shadow = true,
-            scale = 0.12
+          filename = modName .. "/graphic/Nodes/Construct/base.png",
+          width = 512,
+          height = 512,
+          scale = 0.125
         }
       }
     },
@@ -308,25 +298,13 @@ data:extend ({
     {
       {-1.5, -0.5}, {1.5, -0.5}, {1.5, 1.5}, {-1.5, 1.5}
     },
-    base =
-    {
-      layers =
-      {
+    base = {
+      layers = {
         {
-          
-            filename = modName .. "/graphic/Nodes/Bot/base.png",
-            width = 1000,
-            height = 1000,
-            scale = 0.12
-        },
-        {
-          
-            filename = modName .. "/graphic/Nodes/base-shadow.png",
-            width = 1000,
-            height = 1000,
-            draw_as_shadow = true,
-            force_hr_shadow = true,
-            scale = 0.12
+          filename = modName .. "/graphic/Nodes/Bot/base.png",
+          width = 512,
+          height = 512,
+          scale = 0.125
         }
       }
     },
