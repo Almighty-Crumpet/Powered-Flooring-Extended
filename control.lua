@@ -1,255 +1,352 @@
+-- control.lua
+-- Space Age Compatible: Tracks entities per surface, handles multi-planet safely,
+-- cleans up on surface deletion
+
+-- Fast position key for dictionary storage
+local function pos_key(x, y) return x .. "," .. y end
+
 function Set (list)
-	local set = {}
-	for _, l in ipairs(list) do 
-		set[l] = true 
-	end
-	return set
-  end
-
-local tileNames = Set {
-	"powered-floor-tile",
-	"circuit-floor-tile",
-	"solar-floor-tile",
-	"logistics-floor-tile"
-}
-
-local connectableEntities = Set {
-	"small-electric-pole",
-	"medium-electric-pole",
-	"big-electric-pole",
-	"substation",
-	"circuit-floor-widget"
-}
-
-widgetEntities = function ()
-	return 
-	{
-	"powered-floor-widget",
-	"circuit-floor-widget",
-	"solar-floor-widget",
-	"logistics-floor-widget"
-	}
+    local set = {}
+    for _, l in ipairs(list) do
+        set[l] = true
+    end
+    return set
 end
 
 function contains(list, x)
-	for _, v in pairs(list) do
-		if v == x 
-		then 
-			return true 
-		end
-	end
-	return false
+    for _, v in pairs(list) do
+        if v == x then
+            return true
+        end
+    end
+    return false
 end
 
--- Event Handler for on_built_entity and on_robot_built_entity
-function BuiltEntity(event)
-    local pf_entity = event.entity
-	--debug_print("BuiltEntity " .. event.created_entity.name)
-	--if (contains(connectableEntities, event.created_entity.name))
-	if connectableEntities[pf_entity.name]
-    then    
-        local surface = pf_entity.surface
-        IncludeControlWiresToNeighbors( pf_entity, surface )
+local tileNames = Set {
+    "powered-floor-tile",
+    "circuit-floor-tile",
+    "solar-floor-tile",
+    "logistics-floor-tile"
+}
+
+widgetEntities = function ()
+    return
+    {
+        "powered-floor-widget",
+        "circuit-floor-widget",
+        "solar-floor-widget",
+        "logistics-floor-widget"
+    }
+end
+
+-- List of specific entities allowed to connect
+local connectableEntities = {
+    ["small-electric-pole"] = true,
+    ["medium-electric-pole"] = true,
+    ["big-electric-pole"] = true,
+    ["substation"] = true,
+    ["powered-floor-widget"] = true, -- Universal master widget
+    ["circuit-floor-widget"] = true  -- Retained to support legacy poles/tiles in existing saves
+}
+-- Generates an array of names: {"small-electric-pole", "medium-electric-pole", etc.}
+local connectableEntityNames = {}
+for name, _ in pairs(connectableEntities) do table.insert(connectableEntityNames, name) end
+
+-- Safe wire connector lookup wrapper
+local function get_wire_connector(entity, wire_type_id)
+    if not entity or not entity.valid then return nil end
+    local success, connector = pcall(entity.get_wire_connector, wire_type_id)
+    if success and connector then
+        return connector
+    end
+    return nil
+end
+
+-- Establish red and green wire connections
+function IncludeControlWires(entity_a, entity_b)
+    --game.print("IncludeControlWires called for entities: " .. entity_a.name .. " and " .. entity_b.name)
+    if not entity_a or not entity_b or not entity_a.valid or not entity_b.valid then 
+        game.print("One or both entities are invalid.")
+        return 
+    end
+    -- Factorio 1.1 / 2.0 Electric Poles use a single 'pole_circuit' ID for all circuit wires
+    local connector_id = defines.wire_connector_id.pole_circuit
+    -- Connect Red
+    local red_a = entity_a.get_wire_connector(defines.wire_connector_id.circuit_red, true)
+    local red_b = entity_b.get_wire_connector(defines.wire_connector_id.circuit_red, true)
+    --game.print("Red connectors: " .. (red_a and "found" or "not found") .. ", " .. (red_b and "found" or "not found"))
+    if red_a and red_b then 
+        -- In Factorio 2.0, you can pass false as the second argument to bypass engine wire length checks
+        red_a.connect_to(red_b) 
+        --game.print("Red wire connection established between " .. entity_a.name .. " and " .. entity_b.name)
+    end
+    -- Connect Green
+    local green_a = entity_a.get_wire_connector(defines.wire_connector_id.circuit_green, true)
+    local green_b = entity_b.get_wire_connector(defines.wire_connector_id.circuit_green, true)
+    --game.print("Green connectors: " .. (green_a and "found" or "not found") .. ", " .. (green_b and "found" or "not found"))
+    if green_a and green_b then 
+        -- Specify the wire type as green to prevent it from overlaying as a red wire
+        green_a.connect_to(green_b)
+        --game.print("Green wire connection established between " .. entity_a.name .. " and " .. entity_b.name)
     end
 end
 
-function PlayerRemovedTile(event)
-	local player = game.players[event.player_index]
-	if player ~= nil and event.tiles ~= nil and player.surface ~= nil
-	then
-		RemoveOldEntities(event.tiles, player.surface)
-	end
-end
+function IncludeControlWiresToNeighbors(source_entity, surface)
+    if not source_entity or not source_entity.valid then return end
+    if not connectableEntities[source_entity.name] then return end
 
-function RobotRemovedTile(event)
-	if(event.robot ~= nil and event.robot.surface ~= nil)
-	then 
-		RemoveOldEntities(event.tiles, event.robot.surface)
-	end
-end
+    local pos = source_entity.position
+    local is_floor_widget = (source_entity.name == "powered-floor-widget" or source_entity.name == "circuit-floor-widget")
 
-function RemoveOldEntities(tiles, surface)
-	for i, oldtile in ipairs(tiles)
-	do
-		-- Get X/Y coordinates on tile
-		local oldPosition = oldtile.position
-		--log(oldPosition)
-				
-		local X = oldPosition.x + 0.5
-		local Y = oldPosition.y + 0.5
-
-		-- Get all entities at X/Y that match this mod widgets
-		local widgetsFound = surface.find_entities_filtered{position = {X, Y}, name = {"powered-floor-widget",	"circuit-floor-widget",	"solar-floor-widget", "logistics-floor-widget"}}
-		if (widgetsFound ~= nil)
-		then
-			-- Delete said widgets
-			for a, entity in ipairs(widgetsFound)
-			do
-				--log(entity.name)
-				--log(entity.position)
-				entity.destroy()
-			end
-		end
-	end
-end
-
--- Event Handler for on_player_built_tile
---
--- Add the widget
-function PlayerBuiltTile(event)
-    --debug_print("PlayerBuiltTile")
-    local player = game.players[event.player_index]
-    if player ~= nil and event.tiles ~= nil and player.surface ~= nil
-    then
-    	IncludePoweredWidget(event.tiles, player.surface )
-    elseif player == nil
-    then
-    	game.print("PlayerBuiltTile nil player?")
-    elseif event.tiles == nil
-    then
-    	game.print("PlayerBuiltTile nil positions?")
-    elseif player.surface == nil
-    then
-    	game.print("PlayerBuiltTile nil surface?")
-    end
-    
-end
-
--- Event Handler for on_robot_built_tile
---
--- Add the widget
-function RobotBuiltTile(event)
-    --debug_print("RobotBuiltTile")
-    if(event.robot ~= nil)
-    then
-    	--debug_print("RobotBuiltTile event.robot not nil")
-    	if(event.robot.surface ~= nil)
-    	then
-    	--	debug_print("RobotBuiltTile event.robot.surface not nil")
-    	else
-    	--	debug_print("RobotBuiltTile event.robot.surface is nil")
-    	end
+    local elist = {}
+    if is_floor_widget then
+        -- Rule A: A tile widget was built.
+        -- 1. Grab neighboring floor-widgets within 1.5 tile radius
+        local widgets = surface.find_entities_filtered{
+            area = {{pos.x - 1.5, pos.y - 1.5}, {pos.x + 1.5, pos.y + 1.5}},
+            name = {"powered-floor-widget", "circuit-floor-widget"} -- Only find other widgets out wide
+        }
+        
+        -- 2. Tight search: Grab allowed poles/widgets directly on top of this tile
+        local structures = surface.find_entities_filtered{
+            area = {{pos.x - 0.5, pos.y - 0.5}, {pos.x + 0.5, pos.y + 0.5}},
+            name = connectableEntityNames -- Engine-level filter strictly using your list
+        }
+        
+        -- Merge the lists safely
+        elist = widgets
+        for _, struct in ipairs(structures) do
+            table.insert(elist, struct)
+        end
     else
-    	--debug_print("RobotBuiltTile event.robot is nil")
+        -- Rule B: A pole/structure was built.
+        -- Tight search: Only find allowed things directly on top of its own coordinate
+        elist = surface.find_entities_filtered{
+            area = {{pos.x - 0.5, pos.y - 0.5}, {pos.x + 0.5, pos.y + 0.5}},
+            name = connectableEntityNames -- Engine-level filter strictly using your list
+        }
     end
-    if(event.robot ~= nil and event.robot.surface ~= nil)
-    then 
-       IncludePoweredWidget(event.tiles, event.robot.surface)
+
+    -- Process the filtered list
+    for _, other_entity in pairs(elist) do
+        if other_entity.valid and other_entity ~= source_entity then
+            
+            local proceed_with_connection = true
+            local other_is_floor_widget = (other_entity.name == "powered-floor-widget" or other_entity.name == "circuit-floor-widget")
+
+            -- Rule C: Skip connection if a 2x2 entity is already connected to a widget
+            if not is_floor_widget and not other_is_floor_widget then
+                local size = source_entity.prototype.tile_size or 1
+                if size == 2 then
+                    local connector = source_entity.get_wire_connector(defines.wire_connector_id.circuit_red, true) 
+                                   or source_entity.get_wire_connector(defines.wire_connector_id.circuit_green, true)
+                    
+                    if connector and connector.connections then
+                        for _, connection in pairs(connector.connections) do
+                            local target = connection.target.owner
+                            if target.valid and (target.name == "powered-floor-widget" or target.name == "circuit-floor-widget") then
+                                proceed_with_connection = false
+                                break
+                            end
+                        end
+                    end
+                end
+            end
+
+            if proceed_with_connection then
+                if is_floor_widget and other_is_floor_widget then
+                    -- Math check ONLY applied to widget-to-widget connections
+                    local dx = pos.x - other_entity.position.x
+                    local dy = pos.y - other_entity.position.y
+                    local distance = math.sqrt((dx * dx) + (dy * dy))
+
+                    if distance <= 1.6 then
+                        IncludeControlWires(source_entity, other_entity)
+                    end
+                else
+                    -- Tight placement matches connect directly without distance checks
+                    IncludeControlWires(source_entity, other_entity)
+                end
+            end
+
+        end
     end
-
-end
-
--- returns whether some_entity should be connected with a control wire
-function EntityConnectable(some_entity)
-	return connectableEntities[some_entity.name]
 end
 
 
--- connect red and green wires from a powered floor tap or widget to another entity if appropriate
-function IncludeControlWires(pf_entity, some_entity)
-
-    --debug_print("IncludeControlWires some_entity.name=" .. some_entity.name)
-    
-    connectable = EntityConnectable(some_entity)
-    if connectable
-    then
-        --debug_print("IncludeControlWires connecting neighbor with control wires " 
-        -- 	.. pf_entity.position.x .. "," .. pf_entity.position.y .. " to "
-        --	.. some_entity.position.x .. "," .. some_entity.position.y  )
-        	
-		-- Grab the wire connector of the target
-		targetRedConnector = some_entity.get_wire_connector(defines.wire_connector_id.circuit_red ,true)
-		targetGreenConnector = some_entity.get_wire_connector(defines.wire_connector_id.circuit_green ,true)
-		-- Grab the wire connector of the current entity
-		entityRedConnectors = pf_entity.get_wire_connector(defines.wire_connector_id.circuit_red ,true)
-		entityGreenConnectors = pf_entity.get_wire_connector(defines.wire_connector_id.circuit_green ,true)
-		-- Connect both the red and green wires
-
-		entityRedConnectors.connect_to(targetRedConnector)
-		entityGreenConnectors.connect_to(targetGreenConnector)
-
-    else
-    	--debug_print("IncludeControlWires not connectable")
+-- Initialize global storage when the game starts
+script.on_init(function()
+    if not storage.floor_entities then
+        storage.floor_entities = {}
     end
-end
-
--- for all neighboring entities, connect control wires (if appropriate)
-function IncludeControlWiresToNeighbors(pf_entity, surface)
-	local X = pf_entity.position.x 
-	local Y = pf_entity.position.y  
-	--debug_print("IncludeControlWiresToNeighbors looking around " .. X .. "," .. Y)
-	elist = surface.find_entities_filtered{ area={{X-1.5, Y-1.5}, {X+1.5, Y+1.5}} }
-	
-	for i, other_entity in ipairs(elist)
-	do
-		--debug_print("IncludeControlWiresToNeighbors found entity " .. other_entity.name .. " type " .. other_entity.type .. " at " .. other_entity.position.x .. "," .. other_entity.position.y)
-
-		if( other_entity.position.x == X and other_entity.position.y == Y  )
-		then
-		--	debug_print("IncludeControlWiresToNeighbors that's me")
-		else
-		--	debug_print("IncludeControlWiresToNeighbors found entity at " .. other_entity.position.x .. "," .. other_entity.position.y)
-			IncludeControlWires(pf_entity,other_entity )
-		end
-	end
-end
-
--- when adding tiles, include a hidden widget which has power wires
--- if it's a circuit tile, add the circuit wires too
-function IncludePoweredWidget(tiles, surface)
-	--debug_print("IncludePoweredWidget")
-	RemoveOldEntities(tiles, surface)
-
-	for i, oldtile in ipairs(tiles)
-	do
-		local position = oldtile.position
-		--debug_print("IncludePoweredWidget x " .. position.x .. " y " .. position.y )
-		local currentTile = surface.get_tile(position.x,position.y)
-
-		local currentTilename = surface.get_tile(position.x,position.y).name
-
-		local X = position.x
-		local Y = position.y
-
-		--debug_print("IncludePowered tilename is " .. currentTilename .. " at " .. X .. "," .. Y)
-
-		if (tileNames[currentTilename])
-		then
-			if (currentTilename == "logistics-floor-tile")
-			then
-				createPoweredEntity(surface, "logistics-floor-widget", X, Y)
-				createPoweredEntity(surface, "circuit-floor-widget", X, Y)
-				IncludeControlWiresToNeighbors( pf_entity, surface )
-			elseif (currentTilename == "circuit-floor-tile")
-			then
-				createPoweredEntity(surface, "circuit-floor-widget", X, Y)
-				IncludeControlWiresToNeighbors( pf_entity, surface )
-			elseif (currentTilename == "solar-floor-tile")
-			then
-				createPoweredEntity(surface, "solar-floor-widget", X, Y)
-				createPoweredEntity(surface, "powered-floor-widget", X, Y)
-			else
-				createPoweredEntity(surface, "powered-floor-widget", X, Y)
-			end
-		end
-	end
-end
-
-function createPoweredEntity(surface, widgetName, X, Y)
-	pf_entity = surface.create_entity{name = widgetName, position = {X,Y}, force = game.forces.player}
-	pf_entity.destructible = false
-	pf_entity.update_connections()
-end
-
-script.on_event(defines.events.on_player_built_tile,	PlayerBuiltTile)
-script.on_event(defines.events.on_robot_built_tile, 	RobotBuiltTile)
-script.on_event({
-	defines.events.on_built_entity,
-	defines.events.on_robot_built_entity,
-    defines.events.script_raised_built,
-    defines.events.script_raised_revive,
-	}, function(e) 
-	BuiltEntity(e)
 end)
-script.on_event(defines.events.on_player_mined_tile, PlayerRemovedTile) 
-script.on_event(defines.events.on_robot_mined_tile,	RobotRemovedTile)
+
+-- Initialize global storage when loading a save file
+script.on_load(function()
+    -- Global initialization if required
+end)
+
+-- Helper functions
+local function create_floor_entity(surface, pos, entity_name, event_force)
+    local tile_x = math.floor(pos.x)
+    local tile_y = math.floor(pos.y)
+    local centered_pos = {x = tile_x + 0.5, y = tile_y + 0.5}
+
+    local created_entity = surface.create_entity{
+        name = entity_name,
+        position = centered_pos,
+        force = event_force or "player",
+        build_effect = false,
+        raise_built = true 
+    }
+
+    if created_entity and created_entity.valid then
+        if not storage.floor_entities then storage.floor_entities = {} end
+        if not storage.floor_entities[surface.index] then
+            storage.floor_entities[surface.index] = {}
+        end
+
+        local key = pos_key(tile_x, tile_y)
+        if not storage.floor_entities[surface.index][key] then
+            storage.floor_entities[surface.index][key] = {}
+        end
+
+        table.insert(storage.floor_entities[surface.index][key], created_entity)
+    end
+    return created_entity
+end
+
+local function remove_floor_entity(surface, pos)
+    local surf_idx = surface.index
+    if not storage.floor_entities or not storage.floor_entities[surf_idx] then game.print("Floor entities not initialized for this surface.") return end
+
+    local tile_x = math.floor(pos.x)
+    local tile_y = math.floor(pos.y)
+    local key = pos_key(tile_x, tile_y)
+
+    local entity_bucket = storage.floor_entities[surf_idx][key]
+
+    if entity_bucket then
+        for _, ent in pairs(entity_bucket) do
+            if ent and ent.valid then
+                ent.destroy()
+            end
+        end
+    end
+
+    storage.floor_entities[surf_idx][key] = nil
+
+    if next(storage.floor_entities[surf_idx]) == nil then
+        storage.floor_entities[surf_idx] = nil
+    end
+end
+
+local function HandleTileBuild(tiles, surface, force)
+    for _, oldTile in ipairs(tiles) do
+        local pos = oldTile.position
+        
+        -- Clean up existing widgets at this spot (Clears out hidden items for Landfill, Waterfill, Vanilla, and Modded tiles)
+        remove_floor_entity(surface, pos)
+
+        local currentTile = surface.get_tile(pos.x, pos.y)
+
+        -- Fast O(1) Check: Re-spawn widgets ONLY if it matches our tiles
+        if currentTile and tileNames[currentTile.name] then
+            -- Every custom mod tile gets the basic power floor widget
+            local master_widget = create_floor_entity(surface, pos, "powered-floor-widget", force)
+
+            -- Add extra specialized widgets depending on the specific tile type
+            if currentTile.name == "circuit-floor-tile" then
+                -- Circuit tiles utilize the universal widget directly
+                IncludeControlWiresToNeighbors(master_widget, surface)
+
+            elseif currentTile.name == "solar-floor-tile" then
+                create_floor_entity(surface, pos, "solar-floor-widget", force)
+
+            elseif currentTile.name == "logistics-floor-tile" then
+                create_floor_entity(surface, pos, "logistics-floor-widget", force)
+                -- Logistics tiles loop into your red/green wire network
+                IncludeControlWiresToNeighbors(master_widget, surface)
+            end
+        end
+    end
+end
+
+-- Events
+-- BuiltEvent (Player, Robot, and Sandbox safe)
+local function BuiltEvent(event)
+    local surface = game.get_surface(event.surface_index)
+    if not surface then return end
+
+    local tiles = event.tiles
+    if not tiles then return end
+
+    HandleTileBuild(tiles, surface, event.force)
+end
+
+local function MinedEvent(event)
+    local surface = game.get_surface(event.surface_index)
+    if not surface then game.print("Surface not found.") return end
+
+    local tiles = event.tiles
+    if not tiles then game.print("MinedEvent triggered but no tiles data found.") return end
+
+    for _, tile_data in pairs(tiles) do
+        remove_floor_entity(surface, tile_data.position)
+    end
+end
+
+local function OnEntityBuilt(event)
+    local entity = event.entity or event.destination
+    if not entity or not entity.valid then 
+        game.print("OnEntityBuilt triggered but no valid entity found.") 
+        return 
+    end
+
+    -- Check if it's a connectable pole placed over our flooring setup
+    --game.print("OnEntityBuilt triggered for entity: " .. entity.name .. " at position: " .. entity.position.x .. "," .. entity.position.y)
+    if connectableEntities[entity.name] and entity.name ~= "powered-floor-widget" and entity.name ~= "circuit-floor-widget" then
+        local surface = entity.surface
+        IncludeControlWiresToNeighbors(entity, surface)
+    end
+end
+
+-- Event Registry Array Mapping
+script.on_event({
+    defines.events.on_player_built_tile,
+    defines.events.on_robot_built_tile,
+    defines.events.script_raised_set_tiles
+}, BuiltEvent)
+
+script.on_event({
+    defines.events.on_player_mined_tile,
+    defines.events.on_robot_mined_tile
+}, MinedEvent)
+
+-- Combined event registry to catch normal play, bots, sandbox cheats, and script tools
+script.on_event({
+    defines.events.on_built_entity,           -- Sandbox cheats, Map Editor, instant placements
+    defines.events.on_player_built_entity,    -- Normal player placement
+    defines.events.on_robot_built_entity,     -- Construction robot placement
+    defines.events.script_raised_built,       -- Fast script setups / Clone tools
+    defines.events.script_raised_revive,      -- Blueprint script revivals
+    defines.events.on_entity_cloned,          -- Map editor copying/pasting templates
+    defines.events.on_space_platform_built_entity -- Factorio 2.0 Space Age orbital platforms
+}, OnEntityBuilt)
+
+script.on_event({defines.events.on_tiles_seted}, function(event)
+    local surface = game.get_surface(event.surface_index)
+    if not surface or not storage.floor_entities then return end
+
+    for _, tile_data in pairs(event.tiles) do
+        if tileNames[tile_data.old_tile.name] then
+            remove_floor_entity(surface, tile_data.position)
+        end
+    end
+end)
+
+script.on_event({defines.events.on_surface_deleted}, function(event)
+    if storage.floor_entities then
+        storage.floor_entities[event.surface_index] = nil
+    end
+end)
