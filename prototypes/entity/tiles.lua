@@ -22,26 +22,103 @@ require("__base__/prototypes/tile/tiles.lua")
 local modName = "__PoweredFloorExtended__"
 local tile_collision_masks = require("__base__/prototypes/tile/tile-collision-masks")
 local refined_concrete_sounds = sound_variations("__base__/sound/walking/refined-concrete", 11, 0.5)
-local tile_variants = {
-  main = {{picture = "__base__/graphics/terrain/concrete/concrete.png", count = 16, size = 1, scale = 0.5}},
-  transition = {inner_corner = {}, outer_corner = {}, side = {}, u_transition = {}},
-  transitions = {},
-  transitions_between_transitions = {},
-  overlay_layout = {
-    inner_corner = {spritesheet = "__base__/graphics/terrain/concrete/concrete-inner-corner.png", count = 16, scale = 0.5},
-    outer_corner = {spritesheet = "__base__/graphics/terrain/concrete/concrete-outer-corner.png", count = 8, scale = 0.5},
-    side = {spritesheet = "__base__/graphics/terrain/concrete/concrete-side.png", count = 16, scale = 0.5},
-    u_transition = {spritesheet = "__base__/graphics/terrain/concrete/concrete-u.png", count = 8, scale = 0.5},
-    o_transition = {spritesheet = "__base__/graphics/terrain/concrete/concrete-o.png", count = 4, scale = 0.5}
-  },
-  mask_layout = {
-    inner_corner = {spritesheet = "__base__/graphics/terrain/concrete/concrete-inner-corner-mask.png", count = 16, scale = 0.5},
-    outer_corner = {spritesheet = "__base__/graphics/terrain/concrete/concrete-outer-corner-mask.png", count = 8, scale = 0.5},
-    side = {spritesheet = "__base__/graphics/terrain/concrete/concrete-side-mask.png", count = 16, scale = 0.5},
-    u_transition = {spritesheet = "__base__/graphics/terrain/concrete/concrete-u-mask.png", count = 8, scale = 0.5},
-    o_transition = {spritesheet = "__base__/graphics/terrain/concrete/concrete-o-mask.png", count = 4, scale = 0.5}
+-- Helper function to generate unique variants for each tile type
+local function get_variants(style_name)
+  local copy = util.table.deepcopy(data.raw["tile"]["concrete"].variants)
+  copy.material_background = nil
+  copy.main = {
+    {
+      picture = modName .. "/graphic/flooring/" .. style_name .. "/tile.png",
+      count = 4,
+      scale = 0.125,
+      size = 1,
+      line_length = 2
+    }
   }
-}
+  copy.empty_transitions = false
+  copy.transitions = 
+  {
+    overlay_layout =
+    {
+      side =
+      {
+        picture = modName .. "/graphic/Border/grid-side.png",
+        count = 16,
+        width = 512,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-side.png",
+          count = 16,
+          width = 1024,
+          height = 256,
+          scale = 1
+        }
+      },
+      inner_corner =
+      {
+        picture = modName .. "/graphic/Border/grid-inner-corner.png",
+        count = 4,
+        width = 128,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-inner-corner.png",
+          count = 4,
+          width = 256,
+          height = 256,
+          scale = 1
+        }
+      },
+      outer_corner =
+      {
+        picture = modName .. "/graphic/Border/grid-outer-corner.png",
+        count = 4,
+        width = 128,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-outer-corner.png",
+          count = 4,
+          width = 256,
+          height = 256,
+          scale = 1
+        }
+      },
+      u_transition =
+      {
+        picture = modName .. "/graphic/Border/grid-u.png",
+        count = 2,
+        width = 64,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-u.png",
+          count = 2,
+          width = 128,
+          height = 256,
+          scale = 1
+        }
+      },
+      o_transition =
+      {
+        picture = modName .. "/graphic/Border/grid-o.png",
+        count = 2,
+        width = 64,
+        height = 32,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-o.png",
+          count = 2,
+          width = 128,
+          height = 64,
+          scale = 1
+        }
+      }
+    }
+  }
+  return copy
+end
 
 data:extend({
   {
@@ -51,8 +128,7 @@ data:extend({
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 2.0, vehicle_speed_modifier = 2.0,
     layer = 22, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["powered-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
-    transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
+    variants = get_variants(settings.startup["powered-flooring-style"].value),
     walking_sound = refined_concrete_sounds,
     map_color = {r = 192, g = 192, b = 192}, subgroup = "artificial-tiles", order = "a[power]"
   },
@@ -63,8 +139,7 @@ data:extend({
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 2, vehicle_speed_modifier = 2,
     layer = 21, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["circuit-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
-    transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
+    variants = get_variants(settings.startup["circuit-flooring-style"].value),
     walking_sound = refined_concrete_sounds,
     map_color = {r = 192, g = 192, b = 192}, subgroup = "artificial-tiles", order = "b[circuit]"
   },
@@ -75,8 +150,7 @@ data:extend({
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 0.9, vehicle_speed_modifier = 0.9,
     layer = 20, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["solar-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
-    transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
+    variants = get_variants(settings.startup["solar-flooring-style"].value),
     walking_sound = refined_concrete_sounds,
     map_color = {r = 10, g = 49, b = 94}, subgroup = "artificial-tiles", order = "c[solar]"
   },
@@ -87,9 +161,8 @@ data:extend({
     collision_mask = tile_collision_masks.ground(),
     walking_speed_modifier = 2, vehicle_speed_modifier = 2,
     layer = 23, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
-    variants = {main = {{picture = modName .. "/graphic/Flooring/" .. settings.startup["network-flooring-style"].value .. "/tile.png", count = 4, scale = 0.125, size = 1, line_length = 2}}, transition = tile_variants},
-    transitions = concrete_transitions, transitions_between_transitions = concrete_transitions_between_transitions,
+    variants = get_variants(settings.startup["network-flooring-style"].value),
     walking_sound = refined_concrete_sounds,
-    map_color = {r = 10, g = 49, b = 94}, subgroup = "artificial-tiles", order = "d[logistics]"
+    map_color = {r = 45, g = 45, b = 45}, subgroup = "artificial-tiles", order = "d[logistics]"
   }
 })

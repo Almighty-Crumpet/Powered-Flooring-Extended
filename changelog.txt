@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.17
+Date: 24. 07. 2026
+  Changes:
+    - Optimized creation and deletion of hidden entities
+    - Made sure that connecting red/green wires is more strict at connect to only entities directly ontop 
+    - Added some better Hex graphics
+    - Added a migration script to handle the unpaired hidden entities so things delete properly
+    - Reduced the power consumption of Logistic tiles to 0
+    - Updated Tiles to use function to determine the textures
+    - Updated to work with 2.1
+---------------------------------------------------------------------------------------------------
 Version: 0.0.16
 Date: 28. 06. 2025
   Changes:
