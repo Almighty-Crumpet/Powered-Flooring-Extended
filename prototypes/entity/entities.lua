@@ -110,27 +110,20 @@ data:extend ({
       layers = {
         {
           filename = modName .. "/graphic/Nodes/Network/base.png",
-          width = 512,
-          height = 512,
-          scale = 0.125
+          width = 1000,
+          height = 1000,
+          scale = 0.12
         },
         {
-          filename = modName .. "/graphic/Nodes/shadow.png",
-          width = 512,
-          height = 512,
-          scale = 0.125,
+          filename = modName .. "/graphic/Nodes/base-shadow.png",
+          width = 1000,
+          height = 1000,
           draw_as_shadow = true,
-          matrix = {
-        1.5,   0.0,   
-        0.75,  0.03,  
-        0.0,   0.0
-      },
-      -- Adjusted coordinates to anchor this newly flattened, wide shadow to the base corner
-      shift = {0.58, -0.12}, 
+          force_hr_shadow = true,
+          scale = 0.12
         }
       }
     },
-
     draw_logistic_radius_visualization = true, draw_construction_radius_visualization = false,
     working_sound = {sound = {filename = "__base__/sound/roboport-working.ogg", volume = 0.4}, max_sounds_per_type = 3, audible_distance_modifier = 0.75},
     recharging_light = {intensity = 0.2, size = 3, color = {r = 0.5, g = 0.5, b = 1.0}},
@@ -170,9 +163,17 @@ data:extend ({
       layers = {
         {
           filename = modName .. "/graphic/Nodes/Construct/base.png",
-          width = 512,
-          height = 512,
-          scale = 0.125
+          width = 1000,
+          height = 1000,
+          scale = 0.12
+        },
+        {
+          filename = modName .. "/graphic/Nodes/base-shadow.png",
+          width = 1000,
+          height = 1000,
+          draw_as_shadow = true,
+          force_hr_shadow = true,
+          scale = 0.12
         }
       }
     },
@@ -302,9 +303,17 @@ data:extend ({
       layers = {
         {
           filename = modName .. "/graphic/Nodes/Bot/base.png",
-          width = 512,
-          height = 512,
-          scale = 0.125
+          width = 1000,
+          height = 1000,
+          scale = 0.12
+        },
+        {
+          filename = modName .. "/graphic/Nodes/base-shadow.png",
+          width = 1000,
+          height = 1000,
+          draw_as_shadow = true,
+          force_hr_shadow = true,
+          scale = 0.12
         }
       }
     },

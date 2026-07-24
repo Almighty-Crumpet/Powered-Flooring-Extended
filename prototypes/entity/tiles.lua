@@ -35,6 +35,88 @@ local function get_variants(style_name)
       line_length = 2
     }
   }
+  copy.empty_transitions = false
+  copy.transitions = 
+  {
+    overlay_layout =
+    {
+      side =
+      {
+        picture = modName .. "/graphic/Border/grid-side.png",
+        count = 16,
+        width = 512,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-side.png",
+          count = 16,
+          width = 1024,
+          height = 256,
+          scale = 1
+        }
+      },
+      inner_corner =
+      {
+        picture = modName .. "/graphic/Border/grid-inner-corner.png",
+        count = 4,
+        width = 128,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-inner-corner.png",
+          count = 4,
+          width = 256,
+          height = 256,
+          scale = 1
+        }
+      },
+      outer_corner =
+      {
+        picture = modName .. "/graphic/Border/grid-outer-corner.png",
+        count = 4,
+        width = 128,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-outer-corner.png",
+          count = 4,
+          width = 256,
+          height = 256,
+          scale = 1
+        }
+      },
+      u_transition =
+      {
+        picture = modName .. "/graphic/Border/grid-u.png",
+        count = 2,
+        width = 64,
+        height = 128,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-u.png",
+          count = 2,
+          width = 128,
+          height = 256,
+          scale = 1
+        }
+      },
+      o_transition =
+      {
+        picture = modName .. "/graphic/Border/grid-o.png",
+        count = 2,
+        width = 64,
+        height = 32,
+        hr_version =
+        {
+          picture = modName .. "/graphic/Border/hr-grid-o.png",
+          count = 2,
+          width = 128,
+          height = 64,
+          scale = 1
+        }
+      }
+    }
+  }
   return copy
 end
 
@@ -47,8 +129,6 @@ data:extend({
     walking_speed_modifier = 2.0, vehicle_speed_modifier = 2.0,
     layer = 22, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
     variants = get_variants(settings.startup["powered-flooring-style"].value),
-    transitions = data.raw["tile"]["concrete"].variants.transitions,
-    transitions_between_transitions = data.raw["tile"]["concrete"].variants.transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
     map_color = {r = 192, g = 192, b = 192}, subgroup = "artificial-tiles", order = "a[power]"
   },
@@ -60,8 +140,6 @@ data:extend({
     walking_speed_modifier = 2, vehicle_speed_modifier = 2,
     layer = 21, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
     variants = get_variants(settings.startup["circuit-flooring-style"].value),
-    transitions = data.raw["tile"]["concrete"].variants.transitions,
-    transitions_between_transitions = data.raw["tile"]["concrete"].variants.transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
     map_color = {r = 192, g = 192, b = 192}, subgroup = "artificial-tiles", order = "b[circuit]"
   },
@@ -73,8 +151,6 @@ data:extend({
     walking_speed_modifier = 0.9, vehicle_speed_modifier = 0.9,
     layer = 20, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
     variants = get_variants(settings.startup["solar-flooring-style"].value),
-    transitions = data.raw["tile"]["concrete"].variants.transitions,
-    transitions_between_transitions = data.raw["tile"]["concrete"].variants.transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
     map_color = {r = 10, g = 49, b = 94}, subgroup = "artificial-tiles", order = "c[solar]"
   },
@@ -86,9 +162,7 @@ data:extend({
     walking_speed_modifier = 2, vehicle_speed_modifier = 2,
     layer = 23, layer_group = "ground-artificial", decorative_removal_probability = 1.0,
     variants = get_variants(settings.startup["network-flooring-style"].value),
-    transitions = data.raw["tile"]["concrete"].variants.transitions,
-    transitions_between_transitions = data.raw["tile"]["concrete"].variants.transitions_between_transitions,
     walking_sound = refined_concrete_sounds,
-    map_color = {r = 10, g = 49, b = 94}, subgroup = "artificial-tiles", order = "d[logistics]"
+    map_color = {r = 45, g = 45, b = 45}, subgroup = "artificial-tiles", order = "d[logistics]"
   }
 })

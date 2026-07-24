@@ -7,7 +7,6 @@ Date: 24. 07. 2026
     - Added some better Hex graphics
     - Added a migration script to handle the unpaired hidden entities so things delete properly
     - Reduced the power consumption of Logistic tiles to 0
-    - Updated node graphics, could be better
     - Updated Tiles to use function to determine the textures
     - Updated to work with 2.1
 ---------------------------------------------------------------------------------------------------
